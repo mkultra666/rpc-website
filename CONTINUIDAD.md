@@ -30,14 +30,10 @@ reproductores de SoundCloud, que necesitan servidor.
 
 ### Versiones anteriores
 
-Todo se conserva, nada se borra:
-
-| Archivo | Qué es |
-|---|---|
-| `rpc-web-v4.html` | **Activo.** Reestructuración completa, 6 secciones |
-| `rpc-web-v3.html` | Anterior. De acá salieron el fondo WebGL y el cursor |
-| `archive/rpc-web-v2.html` | V2, hecha con Codex |
-| `archive/rpc-web-maqueta.html` | V1, la maqueta original |
+`rpc-web-v4.html` es la única versión vigente. Las versiones V1, V2 y V3
+se eliminaron del árbol de trabajo por decisión del usuario (2026-09-17),
+pero quedan recuperables desde el historial de git si hicieran falta —
+están en el commit `6a163c5`.
 
 ---
 
