@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RPC · Rave Parties Corp — 30 años</title>
+<meta name="description" content="Rave Parties Corp · 30 años empujando la cultura electrónica en Buenos Aires. Fiestas, sets, archivo visual y entradas de Psychedelic Temple, Magic, Get Out of the City, Trance Resistance y Javier Bússola Open to Close.">
+<meta name="theme-color" content="#02040A">
+<meta property="og:title" content="Rave Parties Corp · 30 años">
+<meta property="og:description" content="30 años empujando la cultura electrónica en Buenos Aires.">
+<meta property="og:image" content="assets/Ace26Posteo.jpg">
+<link rel="icon" href="assets/RPC LOGO BLANCO.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================
+   RPC · V4 — "TREINTA"
+   Fondo WebGL + cursor: idénticos a V3 (pedido explícito).
+   Todo el resto: estructura nueva.
+   ========================================================== */
+:root{
+  --ink:#02040A;
+  --ink-2:#07101D;
+  --surface:#0A1726;
+  --line:rgba(135,196,255,.18);
+  --line-2:rgba(135,196,255,.32);
+  --paper:#F7FBFF;
+  --muted:#7E97AF;
+  --acc:#168BFF;
+  --acc-2:#9DFF00;
+  --acc-rgb:22,139,255;
+  --r:0px;
+  --pad:clamp(18px,4.8vw,78px);
+  --display:"Gotham","Gotham SSm","Montserrat",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --nav:72px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;color:var(--paper);
+  font-family:var(--display);font-weight:500;
+  font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  background:#02040A;
+  background-image:
+    linear-gradient(rgba(22,139,255,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(22,139,255,.035) 1px,transparent 1px),
+    radial-gradient(circle at 75% 15%,rgba(0,119,255,.22),transparent 35rem),
+    radial-gradient(circle at 12% 60%,rgba(157,255,0,.05),transparent 32rem);
+  background-size:48px 48px,48px 48px,auto,auto;
+}
+body::before{ /* grano ambiente */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.12;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--acc-2);outline-offset:3px}
+img{max-width:100%}
+::selection{background:var(--acc);color:#02040A}
+
+/* ---------- fondo WebGL (idéntico a V3) ---------- */
+#bggl{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.4s var(--ease)}
+#bggl.is-ready{opacity:.4}
+
+/* ---------- cursor a medida (idéntico a V3) ---------- */
+.cursor{position:fixed;inset:0;pointer-events:none;z-index:2000}
+.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;border-radius:50%;opacity:0;mix-blend-mode:difference;transition:opacity .25s}
+.cursor.is-visible .cursor-dot,.cursor.is-visible .cursor-ring{opacity:1}
+.cursor-dot{width:6px;height:6px;background:var(--paper)}
+.cursor-ring{width:36px;height:36px;border:1px solid var(--acc);transition:opacity .25s,width .3s var(--ease),height .3s var(--ease),border-color .3s var(--ease)}
+.cursor-ring.is-active{width:60px;height:60px;border-color:var(--acc-2)}
+.cursor-ring.is-down{width:26px;height:26px}
+html.has-cursor{cursor:none}
+html.has-cursor a,html.has-cursor button{cursor:none}
+html.has-cursor input,html.has-cursor textarea,html.has-cursor select{cursor:text}
+
+/* ---------- tipografía ---------- */
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3,h4{margin:0;font-weight:900;letter-spacing:-.03em;line-height:.92;text-transform:uppercase}
+h1{font-size:clamp(44px,10vw,116px)}
+h2{font-size:clamp(28px,4.6vw,52px)}
+h3{font-size:clamp(19px,2.4vw,26px)}
+h4{font-size:15px;letter-spacing:.01em}
+p{margin:0 0 1em;text-wrap:pretty}
+.lede{max-width:56ch;color:#C2D2E2;font-weight:400}
+.mono{font-family:var(--mono)}
+
+.chrome-text{
+  background-image:linear-gradient(100deg,
+    var(--paper) 0%,var(--acc) 22%,var(--paper) 38%,
+    var(--acc-2) 52%,var(--paper) 68%,var(--acc) 84%,var(--paper) 100%);
+  background-size:240% 100%;color:transparent;
+  -webkit-background-clip:text;background-clip:text;
+  animation:chromeShine 10s linear infinite;
+}
+@keyframes chromeShine{to{background-position:-240% 0}}
+
+.sheen{position:relative;overflow:hidden}
+.sheen::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(75deg,transparent 42%,rgba(247,251,255,.14) 50%,transparent 58%);
+  transform:translateX(-140%);transition:transform .85s var(--ease);
+}
+.sheen:hover::after{transform:translateX(140%)}
+
+/* ---------- nav ---------- */
+.shellnav{
+  position:sticky;top:0;z-index:60;height:var(--nav);display:flex;gap:0;align-items:center;
+  padding:0 var(--pad);background:rgba(2,4,10,.82);backdrop-filter:blur(18px) saturate(1.3);
+  border-bottom:1px solid var(--line);
+}
+.shellnav .brand{
+  display:flex;align-items:center;gap:11px;margin-right:auto;white-space:nowrap;
+  background:none;border:0;padding:0;cursor:pointer;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:#fff;font-weight:600;text-transform:uppercase
+}
+.shellnav .brand img{display:block;width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 0 14px var(--acc))}
+.shellnav .brand i{font-style:normal;color:var(--muted);letter-spacing:.14em}
+.navtabs{display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.navtabs::-webkit-scrollbar{display:none}
+.tab{
+  background:none;border:0;border-bottom:1px solid transparent;padding:26px 13px 24px;cursor:pointer;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;transition:.18s
+}
+.tab:hover{color:var(--paper)}
+.tab[aria-selected="true"]{color:#fff;border-bottom-color:var(--acc);text-shadow:0 0 12px var(--acc)}
+.nav-cta{
+  margin-left:16px;flex:none;padding:11px 20px;background:var(--acc);color:#02040A;border:0;cursor:pointer;
+  font-family:var(--mono);font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));
+  box-shadow:0 0 28px rgba(var(--acc-rgb),.42);transition:filter .18s
+}
+.nav-cta:hover{filter:brightness(1.14)}
+.navburger{display:none;margin-left:10px;background:none;border:1px solid var(--line);padding:9px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* barra de progreso de scroll (scroll-driven, nativa) */
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--acc),var(--acc-2));z-index:61;pointer-events:none}
+@supports (animation-timeline: scroll()){
+  .progress{animation:growX linear;animation-timeline:scroll(root block)}
+  @keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+}
+
+/* ---------- vistas ---------- */
+.view{display:none;padding-bottom:0}
+.view.on{display:block;animation:fade .42s var(--ease) both}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.wrap{padding:0 var(--pad);max-width:1280px;margin:0 auto}
+.wrap-wide{padding:0 var(--pad);max-width:1600px;margin:0 auto}
+.rule{height:1px;background:var(--line)}
+.sec{padding-block:clamp(72px,10vw,132px)}
+.sec.tight{padding-block:clamp(44px,6vw,72px)}
+
+/* cabecera de sección con número gigante */
+.sec-head{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:40px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px}
+.sec-head h2{font-size:clamp(38px,6.4vw,84px);line-height:.8;letter-spacing:-.065em;max-width:15ch}
+.sec-head .eyebrow{color:var(--acc-2);padding-bottom:6px}
+.sec-n{position:absolute;right:0;top:-.34em;font-size:clamp(90px,15vw,220px);font-weight:900;line-height:1;letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px rgba(135,196,255,.13);pointer-events:none;z-index:-1}
+@supports (animation-timeline: view()){
+  .sec-n{animation:nDrift linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+  @keyframes nDrift{from{transform:translateY(38px)}to{transform:translateY(-38px)}}
+}
+
+/* ---------- reveal ---------- */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+[data-reveal].is-in{opacity:1;transform:none}
+[data-reveal="stagger"]>*{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+[data-reveal="stagger"].is-in>*{opacity:1;transform:none}
+[data-reveal="stagger"].is-in>*:nth-child(1){transition-delay:.02s}
+[data-reveal="stagger"].is-in>*:nth-child(2){transition-delay:.07s}
+[data-reveal="stagger"].is-in>*:nth-child(3){transition-delay:.12s}
+[data-reveal="stagger"].is-in>*:nth-child(4){transition-delay:.17s}
+[data-reveal="stagger"].is-in>*:nth-child(5){transition-delay:.22s}
+[data-reveal="stagger"].is-in>*:nth-child(6){transition-delay:.27s}
+[data-reveal="stagger"].is-in>*:nth-child(7){transition-delay:.32s}
+[data-reveal="stagger"].is-in>*:nth-child(8){transition-delay:.37s}
+[data-reveal="stagger"].is-in>*:nth-child(n+9){transition-delay:.42s}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero{
+  position:relative;min-height:calc(100svh - var(--nav));
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(320px,.95fr);
+  align-items:center;gap:3vw;padding-top:clamp(34px,5vw,58px);padding-bottom:clamp(28px,4vw,48px)
+}
+.hero::before{
+  content:"30";position:absolute;left:calc(var(--pad) * -.6);top:46%;transform:translateY(-50%);
+  font-size:clamp(240px,42vw,700px);font-weight:900;line-height:.62;letter-spacing:-.13em;
+  color:rgba(22,139,255,.05);-webkit-text-stroke:1px rgba(83,168,255,.12);pointer-events:none;z-index:-1
+}
+.hero-copy{position:relative;z-index:2}
+.hero-official-logo{
+  display:block;width:220px;max-width:70vw;height:auto;object-fit:contain;object-position:left center;
+  margin:0 0 26px;filter:drop-shadow(0 0 20px rgba(22,139,255,.26))
+}
+.hero-kicker{display:flex;align-items:center;gap:12px;margin-bottom:16px;font:10px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--acc-2)}
+.hero-kicker::before{content:"";width:40px;height:1px;background:currentColor}
+.hero-title{font-size:clamp(50px,9.4vw,132px);line-height:.82;letter-spacing:-.06em;margin:0 0 6px}
+.hero-title span{display:block;color:transparent;-webkit-text-stroke:1px var(--acc)}
+.hero .lede{max-width:44ch;border-left:2px solid var(--acc);padding-left:18px;color:#BFD4E6;font:clamp(13px,1.25vw,16px)/1.65 var(--mono);margin-top:24px}
+.hero-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero-actions .btn{width:auto;margin:0;padding:18px 28px;text-decoration:none;box-shadow:0 0 46px rgba(var(--acc-rgb),.35)}
+.text-link{font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);padding:14px 4px;transition:.18s;background:none;border:0;cursor:pointer}
+.text-link:hover{color:var(--paper)}
+.hero-est{display:flex;align-items:center;gap:12px;margin-top:38px}
+.hero-est span:last-child{font:10px var(--mono);letter-spacing:.24em;color:var(--muted)}
+.chrome-seal{width:34px;height:34px;flex:none;filter:drop-shadow(0 0 10px rgba(22,139,255,.5))}
+.chrome-seal svg{display:block;width:100%;height:100%}
+
+.hero-art{
+  position:relative;aspect-ratio:1080/1350;height:min(74vh,740px);width:auto;max-width:100%;
+  justify-self:center;isolation:isolate;transform:rotate(2.2deg);
+  filter:drop-shadow(0 60px 80px #000);transition:transform .12s linear
+}
+.hero-art::before{content:"";position:absolute;inset:-18px;border:1px solid rgba(157,255,0,.42);transform:rotate(-4deg)}
+.hero-art::after{content:"";position:absolute;inset:-9%;background:radial-gradient(circle,var(--acc) 0,transparent 65%);filter:blur(55px);opacity:.46;z-index:-1}
+.hero-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:2}
+.hero-art .coordinates{
+  position:absolute;right:-30px;bottom:0;writing-mode:vertical-rl;
+  font:10px var(--mono);font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--acc-2);text-shadow:0 0 14px rgba(157,255,0,.45);z-index:3
+}
+
+/* ---------- barra "próxima fecha" con countdown ---------- */
+.nextbar{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(14px,3vw,32px);
+  padding:16px var(--pad);border-block:1px solid var(--acc);
+  background:linear-gradient(90deg,rgba(var(--acc-rgb),.16),rgba(2,4,10,.55) 60%);
+  backdrop-filter:blur(10px);position:relative;z-index:5
+}
+.nextbar .nb-tag{display:flex;align-items:center;gap:9px;font:10px var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--acc-2);white-space:nowrap}
+.nextbar .pulse{width:8px;height:8px;border-radius:50%;background:var(--acc-2);box-shadow:0 0 0 0 rgba(157,255,0,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(157,255,0,0)}100%{box-shadow:0 0 0 0 rgba(157,255,0,0)}}
+.nextbar .nb-name{font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:clamp(14px,2vw,21px);line-height:1.15}
+.nextbar .nb-meta{font:10.5px var(--mono);color:var(--muted);letter-spacing:.06em}
+.countdown{display:flex;gap:6px}
+.countdown div{min-width:56px;padding:8px 6px;text-align:center;border:1px solid var(--line-2);background:rgba(2,4,10,.6)}
+.countdown b{display:block;font-family:var(--mono);font-size:20px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.countdown span{font:8.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:860px){.nextbar{grid-template-columns:1fr;gap:12px}.countdown{justify-content:flex-start}}
+
+/* ---------- marquee ---------- */
+.marquee{border-top:1px solid var(--acc);border-bottom:1px solid var(--acc);overflow:hidden;padding:11px 0;background:var(--acc);width:102%;margin-left:-1%;position:relative;z-index:4;will-change:transform}
+.marquee div{display:flex;gap:34px;width:max-content;animation:slide 30s linear infinite}
+.marquee span{font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:#02040A;font-weight:700;text-transform:uppercase}
+.marquee b{color:#02040A;font-weight:700}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* ==========================================================
+   AGENDA · stubs + paneles horizontales
+   ========================================================== */
+.grid-stubs{display:grid;gap:12px}
+.stub{
+  display:grid;grid-template-columns:138px minmax(0,1fr) 168px;min-height:168px;
+  background:rgba(7,16,29,.72);border:1px solid var(--line);border-left:3px solid var(--acc);
+  position:relative;text-align:left;width:100%;cursor:pointer;padding:0;font:inherit;
+  transition:transform .22s var(--ease),border-color .22s;box-shadow:0 18px 50px rgba(0,0,0,.16);
+  overflow:hidden
+}
+.stub-thumb{position:relative;overflow:hidden;background:#000;border-right:1px solid var(--line)}
+.stub-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:.9;transition:transform .6s var(--ease),opacity .3s}
+.stub-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 62%,rgba(7,16,29,.7))}
+.stub:hover .stub-thumb img{transform:scale(1.09);opacity:1}
+.stub:hover{transform:translateX(9px);border-color:var(--acc-2);box-shadow:0 24px 70px rgba(0,0,0,.28)}
+.stub.is-past{opacity:.52;border-left-color:var(--muted)}
+.stub.is-past:hover{opacity:.85}
+.stub-main{padding:20px 22px;min-width:0}
+.stub-side{position:relative;border-left:1px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:16px 10px;background:rgba(0,0,0,.22)}
+.stub-side::before,.stub-side::after{content:"";position:absolute;left:-9px;width:18px;height:18px;border-radius:50%;background:var(--ink);border:1px solid var(--line)}
+.stub-side::before{top:-10px}.stub-side::after{bottom:-10px}
+.stub .date{color:var(--acc);font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.stub .name{font-size:clamp(24px,3.9vw,46px);font-weight:900;letter-spacing:-.03em;text-transform:uppercase;margin:6px 0 8px;line-height:.95}
+.stub .meta{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+.stub .price{font-family:var(--mono);font-size:15px;font-weight:600}
+.stub .go{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--acc);text-transform:uppercase}
+
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line);border-radius:99px;color:var(--muted)}
+.badge.live{border-color:var(--acc);color:var(--acc)}
+.badge.out{border-color:#4A3050;color:#8E5F76}
+.badge.done{border-color:var(--muted);color:var(--muted)}
+
+.date-event{
+  --event:#168BFF;--event-rgb:22,139,255;margin-top:24px;display:grid;
+  grid-template-columns:minmax(260px,.82fr) minmax(0,1.18fr);
+  border:1px solid color-mix(in srgb,var(--event) 42%,#111);background:#08080B;
+  scroll-margin-top:calc(var(--nav) + 18px);position:relative;overflow:hidden
+}
+.date-event>.de-art{position:relative;overflow:hidden;background:#000;display:block;border:0;padding:0;cursor:zoom-in}
+.date-event>.de-art img{width:100%;height:100%;aspect-ratio:4/5;object-fit:contain;display:block;background:#000}
+.date-event-info{padding:clamp(26px,4.4vw,58px);display:flex;flex-direction:column;justify-content:center;background:radial-gradient(circle at 100% 0,rgba(var(--event-rgb),.17),transparent 55%)}
+.date-event-info h3{font-size:clamp(38px,5.4vw,72px);margin:14px 0 20px;color:#fff;line-height:.86}
+.date-event-info .lede{color:#C8D2DC}
+.date-prices{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
+.date-prices div{flex:1 1 130px;padding:16px;border:1px solid color-mix(in srgb,var(--event) 38%,#161616)}
+.date-prices b{display:block;text-transform:uppercase;font-size:11px}
+.date-prices span{font:15px var(--mono);color:var(--event)}
+.event-callout{padding:13px 18px;background:var(--event);color:#050508;font:700 11px/1.5 var(--mono);letter-spacing:.08em;text-align:center;text-transform:uppercase}
+.event-note{padding:15px;border-left:3px solid var(--event);background:rgba(var(--event-rgb),.08);font:11px/1.7 var(--mono);color:#DCEAC9;margin-top:6px}
+.date-event .btn{background:var(--event);box-shadow:0 0 35px rgba(var(--event-rgb),.3)}
+.date-event.is-past{filter:saturate(.45)}
+.date-event.is-past .event-callout{background:#2A3542;color:#9FB2C4}
+@media(max-width:820px){.date-event{grid-template-columns:1fr}.date-prices{flex-direction:column}}
+
+/* ==========================================================
+   FIESTAS · conmutador de marcas (cada marca re-tematiza)
+   ========================================================== */
+.worlds{display:grid;grid-template-columns:minmax(230px,.34fr) minmax(0,1fr);gap:clamp(16px,2.6vw,34px);align-items:start}
+.world-rail{display:flex;flex-direction:column;gap:2px;position:sticky;top:calc(var(--nav) + 20px)}
+.world-tab{
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:13px;
+  padding:16px 16px;background:rgba(7,16,29,.6);border:1px solid var(--line);border-left:3px solid transparent;
+  cursor:pointer;text-align:left;transition:.2s var(--ease);width:100%
+}
+.world-tab img{width:34px;height:26px;object-fit:contain;object-position:left center;opacity:.8}
+.world-tab .wt-n{display:block;font-weight:900;text-transform:uppercase;letter-spacing:-.02em;font-size:14px;line-height:1.1}
+.world-tab .wt-k{display:block;font:9.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.world-tab:hover{background:rgba(10,23,38,.9);transform:translateX(4px)}
+.world-tab[aria-selected="true"]{border-left-color:var(--c);background:linear-gradient(90deg,color-mix(in srgb,var(--c) 22%,rgba(7,16,29,.8)),rgba(7,16,29,.6));box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 34%,transparent)}
+.world-tab[aria-selected="true"] .wt-n{color:var(--c)}
+.world-tab[aria-selected="true"] img{opacity:1}
+.world-dot{display:none}
+
+.world-panel{--c:var(--acc);position:relative;border:1px solid color-mix(in srgb,var(--c) 34%,var(--line));background:#05080F;overflow:hidden;min-height:520px;animation:fade .45s var(--ease) both}
+.world-media{position:relative;min-height:clamp(260px,34vw,420px);background:#03060C center/cover no-repeat;display:flex;align-items:flex-end;padding:clamp(20px,3.4vw,40px);overflow:hidden}
+.world-media::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#05080F 4%,rgba(5,8,15,.4) 55%,color-mix(in srgb,var(--c) 26%,transparent));pointer-events:none}
+.world-media-in{position:relative;z-index:2;width:100%}
+.world-logo{display:block;height:clamp(44px,5.4vw,74px);width:auto;max-width:min(100%,420px);object-fit:contain;object-position:left bottom;filter:drop-shadow(0 8px 26px rgba(0,0,0,.85));margin-bottom:14px}
+.world-panel h3{font-size:clamp(32px,5.2vw,68px);line-height:.85;color:#fff;letter-spacing:-.05em}
+.world-panel h3 em{font-style:normal;color:var(--c)}
+.world-body{padding:clamp(22px,3.4vw,40px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(200px,.7fr);gap:clamp(18px,3vw,38px)}
+.world-body .lede{color:#C6D4E2;max-width:52ch}
+.world-facts{border-top:1px solid var(--line)}
+.world-facts div{display:flex;justify-content:space-between;gap:14px;padding:11px 2px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px}
+.world-facts .k2{color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+.world-facts b{color:var(--c);font-weight:600}
+.world-sound{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 0}
+.world-sound span{font:9.5px var(--mono);letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border:1px solid color-mix(in srgb,var(--c) 55%,transparent);color:var(--c)}
+.world-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.world-shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:2px;border-top:1px solid var(--line)}
+.world-shots button{padding:0;border:0;background:#03060C;cursor:zoom-in;aspect-ratio:4/3;overflow:hidden;position:relative}
+.world-shots img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease),opacity .3s;opacity:.82}
+.world-shots button:hover img{transform:scale(1.06);opacity:1}
+@media(max-width:900px){
+  .worlds{grid-template-columns:1fr}
+  .world-rail{position:static;flex-direction:row;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+  .world-rail::-webkit-scrollbar{display:none}
+  .world-tab{flex:0 0 auto;min-width:200px}
+  .world-body{grid-template-columns:1fr}
+}
+
+/* ==========================================================
+   SETS · SoundCloud / YouTube
+   ========================================================== */
+.sets-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.62fr);gap:clamp(16px,2.6vw,32px);align-items:stretch}
+.player{position:relative;border:1px solid var(--line-2);background:#05080F;min-height:340px;display:flex;flex-direction:column;overflow:hidden}
+.player iframe{display:block;width:100%;height:100%;min-height:340px;border:0;flex:1}
+.player-facade{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:clamp(20px,3vw,34px);cursor:pointer;background:linear-gradient(0deg,rgba(2,4,10,.96),rgba(2,4,10,.5) 60%,rgba(2,4,10,.2)),var(--bg) center/cover no-repeat;border:0;text-align:left;width:100%;color:inherit;transition:.3s}
+.player-facade:hover{background-size:auto,106%}
+.player-facade .pf-play{width:62px;height:62px;border-radius:50%;border:1px solid var(--acc-2);display:grid;place-items:center;color:var(--acc-2);font-size:19px;margin-bottom:6px;background:rgba(2,4,10,.6);box-shadow:0 0 34px rgba(157,255,0,.22);transition:.25s var(--ease)}
+.player-facade:hover .pf-play{background:var(--acc-2);color:#02040A;transform:scale(1.07)}
+.player-facade h3{font-size:clamp(22px,3vw,38px);line-height:.9}
+.player-facade .pf-k{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acc-2)}
+.player-facade .pf-m{font:11px var(--mono);color:var(--muted);letter-spacing:.06em}
+
+.set-rail{display:flex;flex-direction:column;gap:8px}
+.set-card{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;padding:14px 16px;
+  border:1px solid var(--line);background:rgba(7,16,29,.68);cursor:pointer;text-align:left;width:100%;
+  transition:.2s var(--ease);text-decoration:none
+}
+.set-card:hover{border-color:var(--acc-2);transform:translateX(5px);background:rgba(10,23,38,.9)}
+.set-card .sc-ico{width:34px;height:34px;flex:none;display:grid;place-items:center;border:1px solid var(--line);font-size:13px;color:var(--acc)}
+.set-card.is-sc .sc-ico{color:#FF7700;border-color:rgba(255,119,0,.5)}
+.set-card.is-yt .sc-ico{color:#FF0033;border-color:rgba(255,0,51,.5)}
+.set-card b{display:block;font-size:13.5px;text-transform:uppercase;letter-spacing:-.01em;line-height:1.2}
+.set-card span{display:block;font:10px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.set-card i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.set-empty{padding:18px;border:1px dashed var(--line-2);font:11px/1.8 var(--mono);color:var(--muted)}
+.set-empty b{color:var(--acc-2);display:block;margin-bottom:5px;letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+@media(max-width:900px){.sets-feature{grid-template-columns:1fr}}
+
+/* ==========================================================
+   ARCHIVO · galería con lightbox
+   ========================================================== */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px}
+.filters button{
+  padding:9px 15px;background:none;border:1px solid var(--line);cursor:pointer;
+  font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:.18s
+}
+.filters button:hover{color:var(--paper);border-color:var(--line-2)}
+.filters button[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#02040A;font-weight:600}
+.gal{columns:4;column-gap:10px}
+.gal figure{margin:0 0 10px;break-inside:avoid;position:relative;border:1px solid var(--line);background:#05080F;overflow:hidden}
+.gal button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;position:relative}
+.gal img{display:block;width:100%;height:auto;transition:transform .6s var(--ease),filter .3s;filter:saturate(.9)}
+.gal button:hover img{transform:scale(1.04);filter:saturate(1.1)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 13px 11px;background:linear-gradient(0deg,rgba(2,4,10,.95),transparent);font:9.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#D6E4F2;pointer-events:none;opacity:0;transform:translateY(6px);transition:.3s var(--ease)}
+.gal figure:hover figcaption{opacity:1;transform:none}
+.gal .yr{position:absolute;top:9px;left:9px;padding:3px 7px;background:rgba(2,4,10,.78);backdrop-filter:blur(6px);font:9px var(--mono);letter-spacing:.12em;color:var(--acc-2);pointer-events:none}
+@media(max-width:1100px){.gal{columns:3}}
+@media(max-width:700px){.gal{columns:2}}
+@media(max-width:420px){.gal{columns:1}}
+
+#lightbox{display:none;border:0;padding:0;margin:0;max-width:none;max-height:none;width:100vw;height:100dvh;background:rgba(2,4,10,.94);backdrop-filter:blur(14px);overflow:hidden}
+#lightbox:popover-open,#lightbox.is-open{display:grid;grid-template-rows:1fr auto;place-items:center;position:fixed;inset:0;z-index:3000}
+#lightbox::backdrop{background:rgba(2,4,10,.8)}
+.lb-stage{display:grid;place-items:center;width:100%;height:100%;padding:clamp(14px,4vw,58px);min-height:0}
+.lb-stage img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border:1px solid var(--line-2);box-shadow:0 40px 120px #000}
+.lb-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:14px var(--pad) calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:rgba(2,4,10,.7)}
+.lb-cap{font:10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#C7D8E8}
+.lb-cap em{font-style:normal;color:var(--acc-2);margin-right:9px}
+.lb-nav{display:flex;gap:6px;flex:none}
+.lb-nav button{width:44px;height:44px;background:none;border:1px solid var(--line);cursor:pointer;color:var(--paper);font-size:15px;transition:.18s}
+.lb-nav button:hover{background:var(--acc);border-color:var(--acc);color:#02040A}
+
+/* ==========================================================
+   HISTORIA · timeline + feature de video
+   ========================================================== */
+.timeline{display:flex;gap:2px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px;margin-inline:calc(var(--pad) * -1);padding-inline:var(--pad)}
+.timeline::-webkit-scrollbar{display:none}
+.tl{
+  flex:0 0 clamp(250px,32vw,340px);scroll-snap-align:start;position:relative;
+  padding:26px 24px 30px;border:1px solid var(--line);border-top:2px solid var(--acc);
+  background:linear-gradient(170deg,rgba(10,23,38,.85),rgba(3,7,17,.9));transition:.25s var(--ease)
+}
+.tl:hover{border-top-color:var(--acc-2);transform:translateY(-5px)}
+.tl b{display:block;font-size:clamp(32px,4.6vw,52px);font-weight:900;letter-spacing:-.05em;line-height:.9;color:transparent;-webkit-text-stroke:1px var(--acc)}
+.tl:hover b{color:var(--acc);-webkit-text-stroke:0}
+.tl h4{margin:14px 0 9px;color:var(--paper);text-transform:uppercase;letter-spacing:-.01em;font-size:16px}
+.tl p{margin:0;font:11.5px/1.75 var(--mono);color:var(--muted)}
+
+.videofeat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2.4vw,28px);align-items:stretch}
+.vbox{position:relative;border:1px solid var(--line);background:#03060C;overflow:hidden;min-height:260px}
+.vbox video{display:block;width:100%;height:100%;object-fit:cover;background:#000}
+.vbox.is-portrait video{aspect-ratio:9/16;max-height:78vh}
+.vbox.is-wide video{aspect-ratio:16/9}
+.vfacade{position:absolute;inset:0;width:100%;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:clamp(18px,2.6vw,30px);cursor:pointer;border:0;text-align:left;color:inherit;background:linear-gradient(0deg,rgba(2,4,10,.95),rgba(2,4,10,.35) 55%,rgba(2,4,10,.15)),var(--bg) center/cover no-repeat}
+.vfacade .pf-play{width:56px;height:56px;border-radius:50%;border:1px solid var(--acc-2);display:grid;place-items:center;color:var(--acc-2);font-size:17px;background:rgba(2,4,10,.6);margin-bottom:4px;transition:.25s var(--ease)}
+.vfacade:hover .pf-play{background:var(--acc-2);color:#02040A;transform:scale(1.07)}
+.vfacade h3{font-size:clamp(19px,2.4vw,30px);line-height:.92}
+.vfacade .pf-k{font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acc-2)}
+.vfacade .pf-m{font:10.5px var(--mono);color:var(--muted);letter-spacing:.05em}
+.vcol{display:grid;gap:clamp(14px,2.4vw,28px);grid-auto-rows:1fr}
+@media(max-width:900px){.videofeat{grid-template-columns:1fr}.vbox.is-portrait video{max-height:none}}
+
+/* ==========================================================
+   BANDAS FULL-BLEED CON FOTO
+   ========================================================== */
+.band{position:relative;display:flex;align-items:flex-end;overflow:hidden;border-block:1px solid var(--line);isolation:isolate}
+.band.tall{min-height:clamp(440px,66vh,760px)}
+.band.mid{min-height:clamp(340px,46vh,520px)}
+.band-bg{position:absolute;inset:0;z-index:-1;background:var(--bg) center/cover no-repeat;transform:scale(1.12);filter:saturate(.72) contrast(1.06)}
+.band::after{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(0deg,#02040A 4%,rgba(2,4,10,.74) 46%,rgba(2,4,10,.36)),
+    radial-gradient(circle at 72% 18%,rgba(var(--acc-rgb),.3),transparent 58%)
+}
+.band-in{position:relative;z-index:2;padding:clamp(40px,7vw,96px) var(--pad);max-width:1400px;margin:0 auto;width:100%}
+@supports (animation-timeline: view()){
+  .band-bg{animation:bandPan linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+  @keyframes bandPan{from{transform:scale(1.16) translateY(-3.5%)}to{transform:scale(1.16) translateY(3.5%)}}
+}
+.big-claim{margin:0;max-width:13ch;font-size:clamp(44px,8.6vw,132px);font-weight:900;line-height:.82;letter-spacing:-.07em;text-transform:uppercase;text-shadow:0 20px 60px rgba(0,0,0,.7)}
+.big-claim span{display:block;color:transparent;-webkit-text-stroke:1px var(--acc-2)}
+.band-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-top:clamp(26px,4vw,52px)}
+.band-foot small{max-width:32ch;font:10px/1.8 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#A9BDD0;margin:0}
+.band-credit{font:9.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acc-2);white-space:nowrap}
+
+/* cifras sobre la banda */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);backdrop-filter:blur(6px)}
+.stats div{background:rgba(4,9,18,.76);padding:24px 20px}
+.stats b{display:block;font-size:clamp(32px,4.6vw,54px);font-weight:900;letter-spacing:-.05em;line-height:.9;color:var(--paper)}
+.stats b em{font-style:normal;color:var(--acc-2)}
+.stats span{display:block;margin-top:8px;font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* ==========================================================
+   BENTO DE MARCAS (home)
+   ========================================================== */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.bcard{
+  position:relative;overflow:hidden;border:1px solid var(--line);min-height:270px;
+  display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(20px,2.4vw,30px);
+  cursor:pointer;text-align:left;background:#05080F;width:100%;
+  transition:transform .28s var(--ease),box-shadow .28s
+}
+.bcard-bg{position:absolute;inset:0;background:var(--bg) center/cover no-repeat;opacity:.52;transition:opacity .45s,transform .8s var(--ease);filter:saturate(.85)}
+.bcard::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(0deg,rgba(3,6,12,.97),rgba(3,6,12,.52) 56%,rgba(3,6,12,.1)),
+    linear-gradient(125deg,color-mix(in srgb,var(--c) 32%,transparent),transparent 58%)
+}
+.bcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c);z-index:3}
+.bcard:hover{transform:translateY(-5px);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.bcard:hover .bcard-bg{opacity:.9;transform:scale(1.07)}
+.bcard>*{position:relative;z-index:2}
+.bcard .b-logo{display:block;height:clamp(40px,4.4vw,58px);width:auto;max-width:76%;object-fit:contain;object-position:left bottom;margin-bottom:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.85))}
+.bcard .b-mark{display:block;width:44px;height:3px;background:var(--c);margin-bottom:auto;box-shadow:0 0 18px var(--c)}
+.bcard h3{font-size:clamp(20px,2.5vw,34px);color:#fff;margin-top:20px;line-height:.9}
+.bcard .b-k{display:block;font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--c);margin-top:9px}
+.bcard .b-go{position:absolute;top:18px;right:18px;z-index:3;width:38px;height:38px;border:1px solid rgba(255,255,255,.22);display:grid;place-items:center;font:13px var(--mono);color:#fff;background:rgba(2,4,10,.4);transition:.25s var(--ease)}
+.bcard:hover .b-go{background:var(--c);border-color:var(--c);color:#02040A}
+.bcard:nth-child(1),.bcard:nth-child(2){grid-column:span 3;min-height:clamp(300px,34vw,400px)}
+.bcard:nth-child(3),.bcard:nth-child(4),.bcard:nth-child(5){grid-column:span 2}
+@media(max-width:900px){
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .bcard:nth-child(n){grid-column:span 1;min-height:250px}
+  .bcard:nth-child(1){grid-column:span 2}
+}
+@media(max-width:520px){
+  .bento{grid-template-columns:1fr}
+  .bcard:nth-child(n){grid-column:span 1}
+}
+
+/* ==========================================================
+   PORTALES (sets / archivo / historia)
+   ========================================================== */
+.gateways{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:10px}
+.gate{
+  position:relative;overflow:hidden;border:1px solid var(--line);min-height:clamp(280px,32vw,360px);
+  display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(22px,2.6vw,30px);
+  cursor:pointer;text-align:left;background:#05080F;width:100%;transition:transform .28s var(--ease)
+}
+.gate-bg{position:absolute;inset:0;background:var(--bg) center/cover no-repeat;opacity:.48;transition:opacity .45s,transform .8s var(--ease)}
+.gate::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,rgba(2,4,10,.97),rgba(2,4,10,.44) 62%,rgba(2,4,10,.1))}
+.gate:hover{transform:translateY(-5px)}
+.gate:hover .gate-bg{opacity:.82;transform:scale(1.06)}
+.gate>*{position:relative;z-index:2}
+.gate .g-k{display:block;font:10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--acc-2);margin-bottom:10px}
+.gate h3{font-size:clamp(22px,2.7vw,36px);color:#fff;line-height:.9}
+.gate .g-m{display:block;font:11px/1.7 var(--mono);color:#A9BDD0;margin-top:10px;max-width:34ch}
+.gate .g-go{position:absolute;top:20px;right:20px;z-index:3;width:44px;height:44px;border:1px solid rgba(255,255,255,.24);display:grid;place-items:center;font-size:15px;color:#fff;background:rgba(2,4,10,.4);transition:.25s var(--ease)}
+.gate:hover .g-go{background:var(--acc-2);border-color:var(--acc-2);color:#02040A}
+.gate .g-play{width:58px;height:58px;border-radius:50%;border:1px solid var(--acc-2);display:grid;place-items:center;color:var(--acc-2);font-size:18px;background:rgba(2,4,10,.55);margin-bottom:auto;box-shadow:0 0 30px rgba(157,255,0,.2);transition:.25s var(--ease)}
+.gate:hover .g-play{background:var(--acc-2);color:#02040A;transform:scale(1.08)}
+
+/* mosaico del archivo */
+.mosaic{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:2px;border:1px solid var(--line);background:var(--line)}
+.mosaic button{padding:0;border:0;background:#03060C;aspect-ratio:1;overflow:hidden;cursor:pointer;position:relative}
+.mosaic img{width:100%;height:100%;object-fit:cover;opacity:.74;transition:opacity .35s,transform .6s var(--ease)}
+.mosaic button:hover img{opacity:1;transform:scale(1.09)}
+.mosaic .more{display:grid;place-items:center;background:rgba(7,16,29,.9);font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--acc-2);text-align:center;padding:10px;line-height:1.6}
+
+/* ==========================================================
+   ACCESOS / RRPP / footer
+   ========================================================== */
+.links{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.link{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:82px;
+  padding:15px 18px;border:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;transition:.18s;background:rgba(7,16,29,.7);cursor:pointer;text-align:left;width:100%
+}
+.link:hover{background:var(--acc);color:#02040A;border-color:var(--acc);transform:translateY(-4px)}
+.link.ig:hover{background:linear-gradient(120deg,#C13584,#F56040);border-color:#F56040;color:#fff}
+.link.sc:hover{background:#FF7700;border-color:#FF7700;color:#02040A}
+.link.yt{position:relative;overflow:hidden;padding-left:62px}
+.link.yt::before{content:"▶";position:absolute;left:18px;display:grid;place-items:center;width:28px;height:20px;border-radius:5px;background:#FF0033;color:#fff;font-size:10px;padding-left:2px;box-shadow:0 0 24px rgba(255,0,51,.28)}
+.link.yt:hover{border-color:#FF0033;background:linear-gradient(90deg,rgba(255,0,51,.2),rgba(7,16,29,.7) 42%);color:#fff}
+.rrpp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.rrpp{display:flex;justify-content:space-between;align-items:center;min-height:76px;padding:14px 16px;border:1px solid var(--line);text-decoration:none;transition:.18s;background:rgba(7,16,29,.55)}
+.rrpp:hover{background:#25D366;color:#02040A;transform:translateY(-3px)}
+.rrpp:hover span{color:#02040A}
+.rrpp b{font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.rrpp span{font:10px var(--mono);color:#25D366;letter-spacing:.08em}
+
+.venue-mark{margin-top:20px;padding:20px;border:1px solid var(--line);background:var(--ink-2);text-align:center}
+.venue-mark img{width:min(200px,72%);height:80px;object-fit:contain}
+.rpc-footer{min-height:340px;display:flex;align-items:center;padding:64px var(--pad) 40px;border-top:1px solid var(--line);position:relative;overflow:hidden;background:linear-gradient(115deg,#07101D,#02040A)}
+.rpc-footer::after{content:"";position:absolute;right:-5%;bottom:-40%;width:70vw;height:500px;background:url('assets/LOGO%20RPC.png') center/contain no-repeat;opacity:.08;pointer-events:none}
+.rpc-footer-inner{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:32px;position:relative;z-index:1;width:100%;flex-wrap:wrap}
+.rpc-footer img.f-logo{width:min(330px,50vw);height:auto;filter:invert(1) drop-shadow(0 0 22px rgba(22,139,255,.55))}
+.footer-side{text-align:right}
+.rpc-footer p{font:10px/1.8 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.footer-links{display:flex;gap:14px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}
+.footer-links button,.footer-links a{background:none;border:0;padding:0;cursor:pointer;font:10px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:.18s}
+.footer-links button:hover,.footer-links a:hover{color:var(--acc-2)}
+@media(max-width:700px){.rpc-footer-inner{align-items:flex-start;flex-direction:column}.footer-side{text-align:left}.footer-links{justify-content:flex-start}}
+
+/* ==========================================================
+   CHECKOUT + PUERTA (se conservan)
+   ========================================================== */
+.checkout{display:grid;grid-template-columns:1fr 380px;gap:clamp(24px,4vw,48px);align-items:start}
+.tanda{
+  display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;
+  padding:16px 18px;border:1px solid var(--line);margin-bottom:10px;
+  background:var(--ink-2);cursor:pointer;transition:.18s;width:100%;text-align:left;box-shadow:0 18px 50px rgba(0,0,0,.16)
+}
+.tanda:hover:not(.gone){border-color:var(--acc)}
+.tanda[aria-checked="true"]{border-color:var(--acc);background:rgba(22,139,255,.15)}
+.tanda.gone{opacity:.4;cursor:not-allowed}
+.tanda .tn{font-weight:700;letter-spacing:-.01em}
+.tanda .tq{font-family:var(--mono);font-size:11px;color:var(--muted);display:block;margin-top:3px;letter-spacing:.05em}
+.tanda .tp{font-family:var(--mono);font-weight:600;font-size:16px}
+.qty{display:flex;align-items:center;gap:2px;border:1px solid var(--line);width:max-content}
+.qty button{width:40px;height:40px;background:none;border:0;cursor:pointer;font-size:18px;color:var(--muted)}
+.qty button:hover{color:var(--acc)}
+.qty span{width:44px;text-align:center;font-family:var(--mono);font-weight:600}
+.field{display:block;margin-bottom:12px}
+.field span{display:block;margin-bottom:6px}
+.field input{width:100%;padding:13px 14px;background:var(--ink-2);border:1px solid var(--line);color:var(--paper);font-family:var(--mono);font-size:14px}
+.field input:focus{border-color:var(--acc);outline:none}
+.summary{border:1px solid var(--line);border-top:3px solid var(--acc);padding:22px;background:rgba(7,16,29,.86);position:sticky;top:calc(var(--nav) + 20px)}
+.sum-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;padding:7px 0;color:#C9C2DA}
+.sum-row.total{border-top:1px solid var(--line);margin-top:10px;padding-top:14px;font-size:19px;font-weight:600;color:var(--paper)}
+.btn{
+  display:block;width:100%;padding:16px;margin-top:16px;cursor:pointer;
+  background:var(--acc);color:var(--ink);border:0;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  box-shadow:0 0 35px rgba(var(--acc-rgb),.2);
+  font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  transition:filter .18s,transform .12s linear;text-align:center;text-decoration:none
+}
+.btn:hover{filter:brightness(1.12)}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--paper);box-shadow:none}
+.btn.ghost:hover{border-color:var(--acc-2);color:var(--acc-2);filter:none}
+.btn.sm{padding:12px 20px;width:auto;margin:0;font-size:11px}
+
+.ticket-media{margin:-22px -22px 22px}
+.ticket-media-main{position:relative;aspect-ratio:1;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.ticket-media-main img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .2s ease,transform .45s ease}
+.ticket-media-main:hover img{transform:scale(1.018)}
+.ticket-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+.ticket-thumb{padding:0;border:0;background:#02040A;cursor:pointer;aspect-ratio:1;overflow:hidden;opacity:.48;transition:.18s}
+.ticket-thumb:hover,.ticket-thumb[aria-selected="true"]{opacity:1;box-shadow:inset 0 -3px var(--acc)}
+.ticket-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.fineprint{font-family:var(--mono);font-size:10.5px;color:var(--muted);line-height:1.7;margin-top:14px}
+
+.ticket{max-width:400px;margin:0 auto;border:1px solid var(--acc);background:var(--ink-2);overflow:hidden}
+.ticket-top{padding:24px;border-bottom:1px dashed var(--line);position:relative}
+.ticket-top::after,.ticket-top::before{content:"";position:absolute;bottom:-10px;width:18px;height:18px;border-radius:50%;background:var(--ink);border:1px solid var(--line)}
+.ticket-top::before{left:-10px}.ticket-top::after{right:-10px}
+.ticket-qr{padding:26px 24px 24px;text-align:center}
+.ticket-qr svg{width:190px;height:190px;background:#fff;padding:10px}
+.code{font-family:var(--mono);font-size:13px;letter-spacing:.14em;margin-top:12px;color:var(--acc)}
+
+.door{max-width:440px;margin:0 auto}
+.scanner{aspect-ratio:1;border:1px solid var(--line);position:relative;overflow:hidden;background:linear-gradient(180deg,#08070F,#14122A);display:flex;align-items:center;justify-content:center}
+.frame{width:62%;aspect-ratio:1;position:relative}
+.frame i{position:absolute;width:30px;height:30px;border:2px solid var(--acc)}
+.frame i:nth-child(1){top:0;left:0;border-right:0;border-bottom:0}
+.frame i:nth-child(2){top:0;right:0;border-left:0;border-bottom:0}
+.frame i:nth-child(3){bottom:0;left:0;border-right:0;border-top:0}
+.frame i:nth-child(4){bottom:0;right:0;border-left:0;border-top:0}
+.laser{position:absolute;left:8%;right:8%;height:2px;background:var(--acc);box-shadow:0 0 14px var(--acc);animation:scan 2.6s ease-in-out infinite}
+@keyframes scan{0%,100%{top:20%}50%{top:80%}}
+.readout{padding:18px;border:1px solid var(--line);border-top:0;font-family:var(--mono);font-size:12px}
+.readout.ok{border-color:#2BD98A;background:rgba(43,217,138,.09)}
+.readout.dup{border-color:#FFB020;background:rgba(255,176,32,.09)}
+.readout.bad{border-color:#FF3D5A;background:rgba(255,61,90,.09)}
+.readout .verdict{font-size:19px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+.readout.ok .verdict{color:#2BD98A}.readout.dup .verdict{color:#FFB020}.readout.bad .verdict{color:#FF3D5A}
+.counters{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:14px}
+.counters div{background:var(--ink-2);padding:14px 10px;text-align:center}
+.counters b{display:block;font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.02em}
+.counters span{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.offline{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:14px;letter-spacing:.06em}
+.dot{width:7px;height:7px;border-radius:50%;background:#FFB020;box-shadow:0 0 8px #FFB020}
+
+/* ---------- view transitions ---------- */
+::view-transition-old(root),::view-transition-new(root){animation-duration:.5s;animation-timing-function:var(--ease)}
+::view-transition-old(root){animation-name:vt-out}
+::view-transition-new(root){animation-name:vt-in}
+@keyframes vt-out{to{opacity:0;transform:scale(1.012);filter:blur(5px)}}
+@keyframes vt-in{from{opacity:0;transform:scale(.988);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+
+/* ---------- responsive ---------- */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr;gap:34px}
+  .hero-art{width:min(500px,88%);height:auto;aspect-ratio:1080/1350;margin:0;justify-self:start}
+  .checkout{grid-template-columns:1fr}
+  .summary{position:static}
+}
+@media(max-width:820px){
+  .navtabs{position:fixed;top:var(--nav);left:0;right:0;flex-direction:column;align-items:stretch;background:rgba(2,4,10,.97);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);padding:6px var(--pad) 16px;max-height:calc(100dvh - var(--nav));overflow-y:auto;display:none;z-index:59}
+  .navtabs.is-open{display:flex}
+  .tab{padding:15px 4px;border-bottom:1px solid var(--line);text-align:left;font-size:12px}
+  .tab[aria-selected="true"]{border-bottom-color:var(--acc)}
+  .navburger{display:block}
+  .nav-cta{margin-left:auto}
+}
+@media(max-width:700px){
+  .stub{grid-template-columns:92px minmax(0,1fr) 104px;min-height:146px}
+}
+@media(max-width:560px){
+  .stub{grid-template-columns:78px minmax(0,1fr) 92px;min-height:132px}
+  .hero-title{font-size:clamp(42px,13vw,72px)}
+  .nav-cta{padding:10px 14px;font-size:9.5px}
+  .shellnav .brand span{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  [data-reveal],[data-reveal="stagger"]>*{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bggl" aria-hidden="true"></canvas>
+<div class="cursor" aria-hidden="true"><span class="cursor-ring"></span><span class="cursor-dot"></span></div>
+<div class="progress" aria-hidden="true"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="chromeLiquid" x="-60%" y="-60%" width="220%" height="220%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.01 0.024" numOctaves="2" seed="7" result="noise" stitchTiles="stitch"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="16" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+    <radialGradient id="sealGrad" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#F7FBFF"></stop>
+      <stop offset="35%" stop-color="#168BFF"></stop>
+      <stop offset="72%" stop-color="#07101D"></stop>
+      <stop offset="100%" stop-color="#9DFF00"></stop>
+    </radialGradient>
+  </defs>
+</svg>
+
+<nav class="shellnav">
+  <button class="brand" data-go="inicio" aria-label="Ir al inicio">
+    <img src="assets/LOGO%20RPC.png" alt="" width="38" height="38">
+    <span>Rave Parties Corp <i>· EST. 1996</i></span>
+  </button>
+  <div class="navtabs" id="navtabs">
+    <button class="tab" data-go="inicio" data-scramble aria-selected="true">Inicio</button>
+    <button class="tab" data-go="agenda" data-scramble aria-selected="false">Agenda</button>
+    <button class="tab" data-go="fiestas" data-scramble aria-selected="false">Las fiestas</button>
+    <button class="tab" data-go="sets" data-scramble aria-selected="false">Sets</button>
+    <button class="tab" data-go="archivo" data-scramble aria-selected="false">Archivo</button>
+    <button class="tab" data-go="historia" data-scramble aria-selected="false">30 años</button>
+  </div>
+  <button class="navburger" id="navburger" aria-expanded="false" aria-controls="navtabs">Menú</button>
+  <button class="nav-cta" data-go="entradas" data-magnetic>Entradas</button>
+</nav>
+
+<!-- ======================= INICIO ======================= -->
+<section class="view on" id="inicio">
+
+  <div class="wrap-wide hero">
+    <div class="hero-copy">
+      <img class="hero-official-logo" src="assets/RPC%20LOGO%20BLANCO.png" width="220" height="118" alt="Rave Parties Corp · since 1996">
+      <span class="hero-kicker">Buenos Aires · 1996 — 2026</span>
+      <h1 class="hero-title">Treinta<br>años<span>de pista</span></h1>
+      <p class="lede">Cinco marcas, cientos de noches y una sola idea: la pista como lugar donde algo pasa. Esto es el archivo vivo de Rave Parties Corp.</p>
+      <div class="hero-actions">
+        <button class="btn" data-go="agenda" data-magnetic>Ver la agenda</button>
+        <button class="text-link" data-go="fiestas">Explorar las fiestas →</button>
+        <button class="text-link" data-go="sets">Escuchar sets →</button>
+      </div>
+      <div class="hero-est">
+        <span class="chrome-seal" data-chrome-seal aria-hidden="true">
+          <svg viewBox="0 0 120 120"><g filter="url(#chromeLiquid)"><circle cx="60" cy="60" r="52" fill="url(#sealGrad)"></circle><circle cx="60" cy="60" r="51" fill="none" stroke="#F7FBFF" stroke-opacity=".5"></circle></g></svg>
+        </span>
+        <span>EST. 1996 / BUENOS AIRES</span>
+      </div>
+    </div>
+    <div class="hero-art" data-tilt>
+      <img class="hero-poster" id="heroPoster" src="assets/Ace26Posteo.jpg" alt="Flyer de la próxima fecha de Rave Parties Corp">
+      <span class="coordinates">Próximo evento · Buenos Aires</span>
+    </div>
+  </div>
+
+  <div class="nextbar" id="nextbar">
+    <span class="nb-tag"><i class="pulse"></i> Próxima fecha</span>
+    <div>
+      <div class="nb-name" id="nbName">—</div>
+      <div class="nb-meta" id="nbMeta">—</div>
+    </div>
+    <div class="countdown" id="countdown" aria-live="off">
+      <div><b id="cdD">--</b><span>días</span></div>
+      <div><b id="cdH">--</b><span>hs</span></div>
+      <div><b id="cdM">--</b><span>min</span></div>
+      <div><b id="cdS">--</b><span>seg</span></div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Psychedelic Temple <b>·</b> Magic <b>·</b> Get Out of the City <b>·</b> Javier Bússola Open to Close <b>·</b> Trance Resistance <b>·</b></span>
+      <span>Psychedelic Temple <b>·</b> Magic <b>·</b> Get Out of the City <b>·</b> Javier Bússola Open to Close <b>·</b> Trance Resistance <b>·</b></span>
+    </div>
+  </div>
+
+  <!-- manifiesto sobre foto de pista -->
+  <section class="band tall" style="--bg:url('assets/recap-magic.jpg')">
+    <div class="band-bg" aria-hidden="true"></div>
+    <div class="band-in">
+      <p class="big-claim">No seguimos la escena. <span>La hacemos.</span></p>
+      <div class="band-foot">
+        <small>Treinta años construyendo pistas, rituales y recuerdos en Buenos Aires.</small>
+        <span class="band-credit">Magic · Niceto Club</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap sec tight">
+    <div class="stats" data-reveal="stagger">
+      <div><b>30<em>+</em></b><span>Años en la escena</span></div>
+      <div><b>5</b><span>Marcas propias</span></div>
+      <div><b>28<em>+</em></b><span>Ediciones producidas</span></div>
+      <div><b>1996</b><span>Desde Buenos Aires</span></div>
+    </div>
+  </div>
+
+  <div class="wrap-wide sec" id="homeAgenda">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Lo que viene</h2>
+      <span class="eyebrow" id="homeAgendaCount">—</span>
+    </div>
+    <div class="grid-stubs" id="homeStubs" data-reveal="stagger"></div>
+    <div style="margin-top:22px"><button class="btn ghost sm" data-go="agenda">Ver toda la agenda →</button></div>
+  </div>
+
+  <div class="wrap-wide sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">02</span>
+      <h2>Las fiestas</h2>
+      <span class="eyebrow">Cinco marcas · cinco mundos</span>
+    </div>
+    <div class="bento" id="homeWorlds" data-reveal="stagger"></div>
+  </div>
+
+  <!-- banda de archivo: mosaico real -->
+  <section class="band mid" style="--bg:url('assets/notas_magic15-2000pista.jpg')">
+    <div class="band-bg" aria-hidden="true"></div>
+    <div class="band-in">
+      <span class="eyebrow" style="color:var(--acc-2)">Archivo · 1996 — 2026</span>
+      <h2 style="margin:14px 0 22px;font-size:clamp(34px,6vw,76px);line-height:.84;max-width:16ch">Tres décadas<br>de pista</h2>
+      <div class="mosaic" id="homeMosaic" data-reveal="stagger"></div>
+    </div>
+  </section>
+
+  <div class="wrap-wide sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">03</span>
+      <h2>Escuchar y mirar</h2>
+      <span class="eyebrow">Sets · archivo · historia</span>
+    </div>
+    <div class="gateways" data-reveal="stagger">
+      <button class="gate" data-go="sets" style="--bg:url('assets/javi.jpg')">
+        <span class="gate-bg" aria-hidden="true"></span>
+        <span class="g-go" aria-hidden="true">↗</span>
+        <span class="g-play" aria-hidden="true">▶</span>
+        <span class="g-k">Sets</span>
+        <h3>Lo que suena<br>en la pista</h3>
+        <span class="g-m">Sets completos de nuestros artistas, reproduciéndose acá mismo.</span>
+      </button>
+      <button class="gate" data-go="archivo" style="--bg:url('assets/INFECTED%202026.png')">
+        <span class="gate-bg" aria-hidden="true"></span>
+        <span class="g-go" aria-hidden="true">↗</span>
+        <span class="g-k">Archivo visual</span>
+        <h3>Fotos<br>y gráfica</h3>
+        <span class="g-m">Pistas, backstages y los flyers de cada edición, en grande.</span>
+      </button>
+      <button class="gate" data-go="historia" style="--bg:url('assets/Backstage%3B%20Javier%20Bussola%20%26%20Darren%20Shambhala%20%40%20Magic%20(BQ).jpg')">
+        <span class="gate-bg" aria-hidden="true"></span>
+        <span class="g-go" aria-hidden="true">↗</span>
+        <span class="g-k">30 años</span>
+        <h3>De dónde<br>venimos</h3>
+        <span class="g-m">De la primera Magic en Niceto al formato Open to Close.</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">04</span>
+      <h2>Accesos</h2>
+      <span class="eyebrow">Todo en un lugar</span>
+    </div>
+    <div class="links" data-reveal="stagger">
+      <button class="link sheen" data-go="entradas">Mi entrada <span>→</span></button>
+      <a class="link ig sheen" href="https://www.instagram.com/ravepartiescorp/" target="_blank" rel="noopener noreferrer">Instagram <span>↗</span></a>
+      <a class="link sc sheen" href="https://soundcloud.com/javier-bussola" target="_blank" rel="noopener noreferrer">SoundCloud <span>↗</span></a>
+      <a class="link yt sheen" href="https://www.youtube.com/@RavePartiesCorp" target="_blank" rel="noopener noreferrer">YouTube · RPC <span>↗</span></a>
+      <a class="link yt sheen" href="https://www.youtube.com/c/JavierBussola" target="_blank" rel="noopener noreferrer">YouTube · Javier Bússola <span>↗</span></a>
+      <a class="link sheen" href="https://wa.me/5491126735220?text=Hola%20RPC%2C%20quiero%20sumarme%20como%20RRPP" target="_blank" rel="noopener noreferrer">Quiero ser RRPP <span>↗</span></a>
+      <a class="link sheen" href="https://wa.me/5491126735220?text=Hola%20RPC%2C%20escribo%20por%20booking%20o%20prensa" target="_blank" rel="noopener noreferrer">Booking y prensa <span>↗</span></a>
+    </div>
+  </div>
+
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">05</span>
+      <h2>RRPP oficiales</h2>
+      <span class="eyebrow">Tickets sin cargo por servicio</span>
+    </div>
+    <div class="rrpp-grid" data-reveal="stagger">
+      <a class="rrpp sheen" href="https://wa.me/5491126735220" target="_blank" rel="noopener noreferrer"><b>Dey</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491137993567" target="_blank" rel="noopener noreferrer"><b>Flor</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491136952929" target="_blank" rel="noopener noreferrer"><b>Mica</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491166474073" target="_blank" rel="noopener noreferrer"><b>Mica Godoy</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491144489969" target="_blank" rel="noopener noreferrer"><b>Max</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491170158239" target="_blank" rel="noopener noreferrer"><b>Agustina</b><span>WhatsApp ↗</span></a>
+      <a class="rrpp sheen" href="https://wa.me/5491125082508" target="_blank" rel="noopener noreferrer"><b>Sabrina</b><span>WhatsApp ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= AGENDA ======================= -->
+<section class="view" id="agenda">
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Agenda</h2>
+      <span class="eyebrow" id="agendaCount">—</span>
+    </div>
+    <div class="grid-stubs" id="agendaStubs" data-reveal="stagger"></div>
+  </div>
+
+  <div class="wrap" id="agendaPanels" aria-label="Detalle de fechas"></div>
+
+  <div class="wrap sec" id="pastWrap" style="display:none">
+    <div class="sec-head">
+      <span class="sec-n" aria-hidden="true">02</span>
+      <h2>Ya pasaron</h2>
+      <span class="eyebrow">Recap · van al archivo</span>
+    </div>
+    <div class="grid-stubs" id="pastStubs"></div>
+    <div style="margin-top:22px"><button class="btn ghost sm" data-go="archivo">Ver el archivo visual →</button></div>
+  </div>
+</section>
+
+<!-- ======================= FIESTAS ======================= -->
+<section class="view" id="fiestas">
+  <div class="wrap-wide sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Las fiestas</h2>
+      <span class="eyebrow">Cinco marcas · cinco mundos</span>
+    </div>
+    <div class="worlds">
+      <div class="world-rail" id="worldRail" role="tablist" aria-label="Marcas de RPC"></div>
+      <div id="worldPanel"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SETS ======================= -->
+<section class="view" id="sets">
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Sets</h2>
+      <span class="eyebrow">SoundCloud · YouTube</span>
+    </div>
+    <p class="lede" style="margin-bottom:32px">Lo que suena en nuestras pistas, de principio a fin. Los sets se reproducen acá mismo: tocá play y seguí navegando.</p>
+
+    <div class="sets-feature" data-reveal>
+      <div class="player" id="featPlayer"></div>
+      <div class="set-rail" id="setRail"></div>
+    </div>
+
+    <div class="sec-head" style="margin-top:clamp(56px,8vw,96px)" data-reveal>
+      <span class="sec-n" aria-hidden="true">02</span>
+      <h2>Canales</h2>
+      <span class="eyebrow">Todo el material en video</span>
+    </div>
+    <div class="links" data-reveal="stagger">
+      <a class="link yt sheen" href="https://www.youtube.com/@RavePartiesCorp" target="_blank" rel="noopener noreferrer">YouTube · Rave Parties Corp <span>↗</span></a>
+      <a class="link yt sheen" href="https://www.youtube.com/c/JavierBussola" target="_blank" rel="noopener noreferrer">YouTube · Javier Bússola <span>↗</span></a>
+      <a class="link sc sheen" href="https://soundcloud.com/javier-bussola" target="_blank" rel="noopener noreferrer">SoundCloud · Javier Bússola <span>↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= ARCHIVO ======================= -->
+<section class="view" id="archivo">
+  <div class="wrap-wide sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Archivo visual</h2>
+      <span class="eyebrow" id="galCount">—</span>
+    </div>
+    <p class="lede" style="margin-bottom:26px">Pistas, backstages y gráfica de nuestras fiestas. Hacé click en cualquier imagen para verla en grande; se puede navegar con las flechas del teclado.</p>
+    <div class="filters" id="galFilters" role="group" aria-label="Filtrar archivo"></div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<!-- ======================= 30 AÑOS ======================= -->
+<section class="view" id="historia">
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">01</span>
+      <h2>Treinta años</h2>
+      <span class="eyebrow">1996 — 2026</span>
+    </div>
+    <p class="lede" style="margin-bottom:34px">De las primeras fiestas a las cinco marcas que hoy sostienen la programación. Deslizá para recorrer la línea de tiempo.</p>
+    <div class="timeline" id="timeline" data-reveal></div>
+  </div>
+
+  <div class="wrap sec">
+    <div class="sec-head" data-reveal>
+      <span class="sec-n" aria-hidden="true">02</span>
+      <h2>Open to Close</h2>
+      <span class="eyebrow">Javier Bússola · ocho horas · un viaje</span>
+    </div>
+    <p class="lede" style="margin-bottom:28px">Un artista solo en cabina de principio a fin, sin soporte. El formato más exigente que producimos, y el que mejor cuenta lo que somos.</p>
+    <div class="videofeat" data-reveal>
+      <div class="vbox is-portrait" data-video="assets/web/javi-pano.mp4" data-poster="assets/javi.jpg">
+        <button class="vfacade" style="--bg:url('assets/javi.jpg')">
+          <span class="pf-play" aria-hidden="true">▶</span>
+          <span class="pf-k">Retrato en movimiento</span>
+          <h3>Javier Bússola</h3>
+          <span class="pf-m">Vertical · tocá para reproducir</span>
+        </button>
+      </div>
+      <div class="vbox is-portrait" data-video="assets/web/javi-otc.mp4" data-poster="assets/javicumple26-posteo.jpg">
+        <button class="vfacade" style="--bg:url('assets/javicumple26-posteo.jpg')">
+          <span class="pf-play" aria-hidden="true">▶</span>
+          <span class="pf-k">Registro completo</span>
+          <h3>Open to Close</h3>
+          <span class="pf-m">Vertical · con sonido</span>
+        </button>
+      </div>
+    </div>
+    <div class="vbox is-wide" style="margin-top:clamp(14px,2.4vw,28px)" data-video="assets/web/javi-pista.mp4" data-poster="assets/javicumple26-800x380jpg.jpg" data-reveal>
+      <button class="vfacade" style="--bg:url('assets/javicumple26-800x380jpg.jpg')">
+        <span class="pf-play" aria-hidden="true">▶</span>
+        <span class="pf-k">Registro de pista</span>
+        <h3>La noche</h3>
+        <span class="pf-m">Horizontal · tocá para reproducir</span>
+      </button>
+    </div>
+    <p class="fineprint">Los videos se cargan sólo cuando los pedís, para que el sitio abra rápido.</p>
+  </div>
+</section>
+
+<!-- ======================= ENTRADAS ======================= -->
+<section class="view" id="entradas">
+  <div class="wrap sec">
+    <span class="eyebrow" id="coEyebrow">Próxima fecha</span>
+    <h2 style="margin:12px 0 34px">Tu entrada</h2>
+
+    <div class="checkout">
+      <div>
+        <span class="eyebrow">1 · Elegí la tanda</span>
+        <div style="margin-top:14px">
+          <button class="tanda gone" disabled aria-checked="false"><span><span class="tn">Preventa · General</span><span class="tq">Agotada</span></span><span class="tp">$35.000</span><span class="badge out">Agotada</span></button>
+          <button class="tanda gone" disabled aria-checked="false"><span><span class="tn">Preventa · All Access</span><span class="tq">Agotada</span></span><span class="tp">$50.000</span><span class="badge out">Agotada</span></button>
+          <button class="tanda" data-price="45000" aria-checked="true"><span><span class="tn">General · 1era tanda</span><span class="tq">Acceso general · +18</span></span><span class="tp">$45.000</span><span class="badge live">Activa</span></button>
+          <button class="tanda" data-price="60000" aria-checked="false"><span><span class="tn">All Access · 1era tanda</span><span class="tq">Experiencia completa</span></span><span class="tp">$60.000</span><span class="badge live">Activa</span></button>
+          <button class="tanda" data-price="70000" aria-checked="false"><span><span class="tn">Stage · Boiler</span><span class="tq">Acceso al escenario</span></span><span class="tp">$70.000</span><span class="badge live">Activa</span></button>
+        </div>
+
+        <span class="eyebrow" style="display:block;margin:32px 0 12px">2 · Cantidad</span>
+        <div class="qty">
+          <button id="minus" aria-label="Quitar una entrada">–</button>
+          <span id="qty">2</span>
+          <button id="plus" aria-label="Agregar una entrada">+</button>
+        </div>
+        <p class="fineprint">Hasta 4 entradas por compra. Cada una entra una sola vez.</p>
+
+        <span class="eyebrow" style="display:block;margin:32px 0 14px">3 · Tus datos</span>
+        <label class="field"><span class="eyebrow">Nombre y apellido</span><input id="buyerName" autocomplete="name" required></label>
+        <label class="field"><span class="eyebrow">Email — ahí te llega el QR</span><input id="buyerEmail" type="email" autocomplete="email" required></label>
+        <label class="field"><span class="eyebrow">DNI</span><input id="buyerDni" inputmode="numeric" required></label>
+        <label class="field"><span class="eyebrow">Código de RRPP (opcional)</span><input placeholder="Ej: LUZ25"></label>
+      </div>
+
+      <div class="summary">
+        <div class="ticket-media">
+          <div class="ticket-media-main">
+            <img id="checkoutArtwork" src="assets/ace800x800.jpg" alt="Arte de la próxima fecha">
+          </div>
+          <div class="ticket-thumbs" aria-label="Artes de la fecha">
+            <button class="ticket-thumb" type="button" aria-selected="true" data-art="assets/ace800x800.jpg" data-alt="Flyer cuadrado de Ace Ventura Open to Close"><img src="assets/ace800x800.jpg" alt=""></button>
+            <button class="ticket-thumb" type="button" aria-selected="false" data-art="assets/Ace26Posteo.jpg" data-alt="Flyer vertical de Ace Ventura Open to Close"><img src="assets/Ace26Posteo.jpg" alt=""></button>
+            <button class="ticket-thumb" type="button" aria-selected="false" data-art="assets/ace800passline.jpg" data-alt="Flyer horizontal de Ace Ventura"><img src="assets/ace800passline.jpg" alt=""></button>
+            <button class="ticket-thumb" type="button" aria-selected="false" data-art="assets/ace261580.jpg" data-alt="Banner de Ace Ventura Open to Close"><img src="assets/ace261580.jpg" alt=""></button>
+          </div>
+        </div>
+        <span class="eyebrow">Resumen</span>
+        <div class="sum-row" style="margin-top:14px"><span id="lineName">General · 1era tanda × 2</span><span id="lineTotal">$90.000</span></div>
+        <div class="sum-row"><span>Cargo por servicio</span><span style="color:var(--acc)">$0</span></div>
+        <div class="sum-row total"><span>Total</span><span id="grandTotal">$90.000</span></div>
+        <button class="btn" id="pay" data-magnetic>Emitir entrada demo</button>
+        <button class="btn ghost" id="reset" style="margin-top:8px">Ver entrada emitida</button>
+        <p class="fineprint">Demostración local: no cobra dinero ni envía datos. La entrada queda guardada sólo en este navegador.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap sec" id="issued" style="display:none">
+    <div class="rule" style="margin-bottom:44px"></div>
+    <h2 style="text-align:center;margin-bottom:8px">Entrada emitida</h2>
+    <p class="lede" style="text-align:center;margin:0 auto 32px">Mostrala en la puerta. Sirve una sola vez.</p>
+    <div class="ticket">
+      <div class="ticket-top">
+        <span class="mono" id="issuedWhen" style="color:var(--acc);font-size:11px;letter-spacing:.12em">—</span>
+        <div id="issuedEvent" style="font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:-.03em;margin:8px 0">—</div>
+        <div class="mono" id="issuedVenue" style="font-size:11px;color:var(--muted)">—</div>
+        <div class="mono" id="issuedOwner" style="font-size:11px;color:var(--muted);margin-top:6px">—</div>
+      </div>
+      <div class="ticket-qr">
+        <div id="qrbox"></div>
+        <div class="code" id="issuedCode">—</div>
+        <p class="fineprint" id="issuedCount" style="text-align:center">—</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PUERTA ======================= -->
+<section class="view" id="puerta">
+  <div class="wrap sec door">
+    <span class="eyebrow">Terminal de puerta · uso interno</span>
+    <h2 style="margin:12px 0 6px" id="doorEvent">—</h2>
+    <p class="fineprint" style="margin-bottom:22px" id="doorMeta">—</p>
+
+    <div class="counters">
+      <div><b id="cIn">418</b><span>Ingresaron</span></div>
+      <div><b>952</b><span>Vendidas</span></div>
+      <div><b id="cDup">7</b><span>Rechazos</span></div>
+    </div>
+
+    <div class="offline"><i class="dot"></i> Modo offline · 952 entradas en el celular · última sincronización 23:41</div>
+
+    <div class="scanner">
+      <div class="frame"><i></i><i></i><i></i><i></i><div class="laser"></div></div>
+    </div>
+    <div class="readout ok" id="readout">
+      <div class="verdict">Adelante</div>
+      <div>RPC-30-8F2C-A91D · General</div>
+      <div style="color:var(--muted);margin-top:4px">Camila Ferreyra · pedir DNI 41.208.774</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px">
+      <button class="btn ghost" data-scan="ok" style="margin:0">Válida</button>
+      <button class="btn ghost" data-scan="dup" style="margin:0">Repetida</button>
+      <button class="btn ghost" data-scan="bad" style="margin:0">Falsa</button>
+    </div>
+    <p class="fineprint">Botones de prueba: así se ve la pantalla en cada caso. En la fiesta esto lo dispara la cámara.</p>
+  </div>
+</section>
+
+<footer class="rpc-footer">
+  <div class="rpc-footer-inner">
+    <img class="f-logo" src="assets/RPC.png" alt="Rave Parties Corp · since 1996">
+    <div class="footer-side">
+      <p>Buenos Aires · Argentina<br>30 años empujando la cultura electrónica<br>1996 — 2026</p>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/ravepartiescorp/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://soundcloud.com/javier-bussola" target="_blank" rel="noopener noreferrer">SoundCloud</a>
+        <a href="https://www.youtube.com/@RavePartiesCorp" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <button data-go="puerta">Terminal de puerta</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="lightbox" popover>
+  <div class="lb-stage"><img id="lbImg" src="" alt=""></div>
+  <div class="lb-bar">
+    <span class="lb-cap" id="lbCap"></span>
+    <div class="lb-nav">
+      <button id="lbPrev" aria-label="Anterior">←</button>
+      <button id="lbNext" aria-label="Siguiente">→</button>
+      <button id="lbClose" aria-label="Cerrar">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+var finePointer = matchMedia('(pointer: fine)');
+var htmlEl = document.documentElement;
+
+/* ===========================================================
+   DATOS — editá acá para actualizar el sitio
+   =========================================================== */
+
+/* --- FECHAS ------------------------------------------------
+   `iso` ordena las fechas (la más cercana primero).
+   MODO_DISENO = true  → todas las fechas se muestran activas,
+                         sin importar si la fecha ya pasó.
+   MODO_DISENO = false → el sitio separa solo "próximas" de
+                         "ya pasaron" mirando la fecha real.  */
+var MODO_DISENO = true;
+
+var EVENTS = [
+  {
+    id:'ace', brand:'Psychedelic Temple', name:'Ace Ventura', sub:'Open to Close',
+    iso:'2026-10-03T23:59:00-03:00', hours:'23:59 — 07:00',
+    venue:'Groove', addr:'Av. Santa Fe 4389, CABA', age:'+18',
+    art:'assets/Ace26Posteo.jpg', acc:'#B46CFF', accRgb:'180,108,255',
+    from:'$45.000', badge:'1era tanda',
+    lede:'Un viaje potente, profundo, hipnótico y completamente psicodélico, conducido de principio a fin por uno de los grandes referentes mundiales del psy.',
+    tiers:[['General','$45.000'],['All Access','$60.000'],['Stage / Boiler','$70.000']],
+    callout:'1era tanda activa · Preventa agotada',
+    cta:'entradas'
+  },
+  {
+    id:'javi', brand:'Javier Bússola Open to Close', name:'Javier Bússola', sub:'Birthday · Boiler Edition',
+    iso:'2026-09-05T23:59:00-03:00', hours:'23:59 — 07:00',
+    venue:'Groove', addr:'Av. Santa Fe 4389, CABA', age:'+18',
+    art:'assets/javicumple26-posteo.jpg', acc:'#F141D2', accRgb:'241,65,210',
+    from:'$20.000', badge:'Cumpleaños',
+    lede:'Javier Bússola de principio a fin, recorriendo todos los sonidos y épocas que construyeron su historia.',
+    tiers:[['General','$20.000'],['All Access','$30.000'],['Stage / Boiler','$40.000'],['General 4×3','$60.000'],['All Access 4×3','$90.000']],
+    note:'<b>Dos noches · una entrada.</b><br>Con tu ticket de Indecent Noise ingresabas sin cargo al cumpleaños de Javier.'
+  },
+  {
+    id:'trance', brand:'Trance Resistance', name:'Trance Resistance', sub:'All Night Long',
+    iso:'2026-08-29T23:59:00-03:00', hours:'23:59 — 06:00',
+    venue:'Uniclub', addr:'Guardia Vieja 3360, CABA', age:'+18',
+    art:'assets/trance%20resistance%20emi%20korro%20FEED.png', acc:'#FF2D55', accRgb:'255,45,85',
+    from:'$10.000', badge:'Free hasta 02:00',
+    lede:'Emiliano Pavón y Korrosiv. Dos nombres, una cabina y seis horas y media de fuego sostenido. De principio a fin, sin cortes, sin concesiones.',
+    tiers:[['General','$10.000'],['VIP','$15.000']],
+    callout:'Entrada free hasta las 02:00'
+  },
+  {
+    id:'infected', brand:'Psychedelic Temple', name:'Infected Mushroom', sub:'Live Band & DJ Set',
+    iso:'2026-08-22T23:59:00-03:00', hours:'23:59 — 07:00',
+    venue:'Groove', addr:'Av. Santa Fe 4389, CABA', age:'+18',
+    art:'assets/INFECTED%202026.png', acc:'#00A8FF', accRgb:'0,168,255',
+    from:'$55.000', badge:'Internacional',
+    lede:'Live Band & DJ Set. Leyendas y pioneros del psychedelic en el Templo, con el sonido que marcó generaciones.',
+    tiers:[['General','$55.000'],['All Access','$75.000']],
+    callout:'Psychedelic Temple · Groove',
+    fine:'Line up: Infected Mushroom · NAX closing set · INA warm up.'
+  }
+];
+
+/* --- MARCAS ------------------------------------------------ */
+var WORLDS = [
+  {
+    id:'temple', name:'Psychedelic', name2:'Temple', c:'#00E5C4',
+    logo:'assets/psychedelic%20temple.png',
+    kicker:'Psytrance · full on',
+    media:'assets/INFECTED%202026.png',
+    lede:'El templo. La marca donde traemos a los nombres grandes del psytrance mundial y donde la pista se arma para aguantar toda la noche. Full on, night psy y line ups internacionales.',
+    facts:[['Ediciones','14'],['Sonido','Full on · night psy'],['Venue habitual','Groove'],['Formato','Internacional']],
+    sound:['Full on','Night psy','Progressive'],
+    shots:['assets/INFECTED%202026.png','assets/Ace26Posteo.jpg','assets/ace261580.jpg']
+  },
+  {
+    id:'magic', name:'Magic', c:'#FFB627',
+    logo:'assets/Magic%20logo.png',
+    kicker:'Progressive psy · desde 2000',
+    media:'assets/recap-magic.jpg',
+    lede:'La fiesta fundadora. La primera Magic fue en el año 2000 en Niceto Club y marcó el punto de partida de todo lo que vino después. Progressive psy, pista profunda y un público que volvió durante décadas.',
+    facts:[['Ediciones','9'],['Primera','2000 · Niceto Club'],['Sonido','Progressive psy'],['Rol','Marca fundadora']],
+    sound:['Progressive','Deep psy','Hypnotic'],
+    shots:['assets/recap-magic.jpg','assets/notas_magic15-2000pista.jpg','assets/Backstage%3B%20Javier%20Bussola%20%26%20Darren%20Shambhala%20%40%20Magic%20(BQ).jpg']
+  },
+  {
+    id:'gooc', name:'Get Out', name2:'of the City', c:'#FF6B35',
+    logo:'assets/get%20out%20of%20the%20city%20logo.png',
+    kicker:'Open air · de día',
+    media:'assets/javicumple26-800x380jpg.jpg',
+    lede:'Salir. La marca open air de RPC: de día, afuera de la ciudad, con el sol como parte del line up. Otro cuerpo, otra pista, la misma búsqueda.',
+    facts:[['Ediciones','5'],['Formato','Open air'],['Horario','De día'],['Dónde','Afuera de CABA']],
+    sound:['Open air','Day psy','Groove'],
+    shots:[]
+  },
+  {
+    id:'jb', name:'Javier Bússola', name2:'Open to Close', c:'#D9D4E8',
+    logo:'assets/JBwhite.png',
+    kicker:'Un artista · ocho horas',
+    media:'assets/javi.jpg',
+    lede:'Ocho horas sin soporte. Un solo artista en cabina de la apertura al cierre, contando una historia completa en vez de un set. El formato más exigente que producimos.',
+    facts:[['Formato','Open to Close'],['Duración','8 horas'],['Soporte','Ninguno'],['Artista','Javier Bússola']],
+    sound:['Open to Close','Progressive','Todo el arco'],
+    shots:['assets/javi.jpg','assets/javicumple26-posteo.jpg','assets/javicumple26-1583.jpg'],
+    go:'historia', goLabel:'Ver los videos →'
+  },
+  {
+    id:'trance', name:'Trance', name2:'Resistance', c:'#FF2D55',
+    logo:'',
+    kicker:'Hard trance · tech · bouncy',
+    media:'assets/trance%20resistance%20emi%20korro%20FEED.png',
+    lede:'La resistencia. Hard trance, tech y bouncy sin concesiones, en formato all night long y con precio de puerta pensado para que la pista se llene temprano.',
+    facts:[['Sonido','Hard trance · tech'],['Formato','All night long'],['Venue habitual','Uniclub'],['Puerta','Free hasta 02:00']],
+    sound:['Hard trance','Tech trance','Bouncy'],
+    shots:['assets/trance%20resistance%20emi%20korro%20FEED.png']
+  }
+];
+
+/* --- SETS --------------------------------------------------
+   Para agregar un set: pegá la URL de SoundCloud (track, set
+   o perfil) o de YouTube (video o playlist) en `url`.
+   platform: 'sc' = SoundCloud · 'yt' = YouTube            */
+var SETS = [
+  {
+    platform:'sc', artist:'Javier Bússola', title:'Todos los sets',
+    meta:'Perfil completo · SoundCloud',
+    url:'https://soundcloud.com/javier-bussola',
+    art:'assets/javi.jpg', featured:true
+  }
+];
+
+/* --- ARCHIVO VISUAL ---------------------------------------- */
+var GALLERY = [
+  {src:'assets/notas_magic15-2000pista.jpg', cap:'Magic · pista · Niceto Club', yr:'2000', kind:'pista'},
+  {src:'assets/recap-magic.jpg', cap:'Magic · recap', yr:'Magic', kind:'pista'},
+  {src:'assets/Backstage%3B%20Javier%20Bussola%20%26%20Darren%20Shambhala%20%40%20Magic%20(BQ).jpg', cap:'Backstage · Javier Bússola y Darren Shambhala @ Magic', yr:'Magic', kind:'pista'},
+  {src:'assets/javi.jpg', cap:'Javier Bússola en cabina', yr:'JB', kind:'pista'},
+  {src:'assets/javicumple26-HIST.jpg', cap:'Javier Bússola · Birthday Open to Close', yr:'2026', kind:'pista'},
+  {src:'assets/Ace26Posteo.jpg', cap:'Ace Ventura · Open to Close', yr:'2026', kind:'flyer'},
+  {src:'assets/ace800x800.jpg', cap:'Ace Ventura · arte cuadrado', yr:'2026', kind:'flyer'},
+  {src:'assets/ace800passline.jpg', cap:'Ace Ventura · arte horizontal', yr:'2026', kind:'flyer'},
+  {src:'assets/ace261580.jpg', cap:'Ace Ventura · banner', yr:'2026', kind:'flyer'},
+  {src:'assets/INFECTED%202026.png', cap:'Infected Mushroom · Live Band & DJ Set', yr:'2026', kind:'flyer'},
+  {src:'assets/trance%20resistance%20emi%20korro%20FEED.png', cap:'Trance Resistance · Emiliano Pavón y Korrosiv', yr:'2026', kind:'flyer'},
+  {src:'assets/javicumple26-posteo.jpg', cap:'Javier Bússola · Birthday · posteo', yr:'2026', kind:'flyer'},
+  {src:'assets/javicumple26-800.jpg', cap:'Javier Bússola · Birthday · cuadrado', yr:'2026', kind:'flyer'},
+  {src:'assets/javicumple26-1583.jpg', cap:'Javier Bússola · Birthday · vertical', yr:'2026', kind:'flyer'},
+  {src:'assets/javicumple26FBK.jpg', cap:'Javier Bússola · Birthday · evento', yr:'2026', kind:'flyer'},
+  {src:'assets/javicumple26-800x380jpg.jpg', cap:'Javier Bússola · Birthday · banner', yr:'2026', kind:'flyer'}
+];
+
+/* --- LÍNEA DE TIEMPO --------------------------------------- */
+var TIMELINE = [
+  {y:'1996', t:'Nace RPC', d:'Arranca Rave Parties Corp en Buenos Aires, produciendo fiestas de música electrónica cuando la escena todavía se estaba armando.'},
+  {y:'2000', t:'Primera Magic', d:'La primera edición de Magic, en Niceto Club. La fiesta fundadora: progressive psy y el punto de partida de todo lo que vino después.'},
+  {y:'2000s', t:'Psychedelic Temple', d:'Se consolida el Templo: la marca que trae los nombres grandes del psytrance mundial a Buenos Aires. Hoy lleva 14 ediciones.'},
+  {y:'2010s', t:'Get Out of the City', d:'La escena sale a cielo abierto. Open air, de día y fuera de la ciudad: cinco ediciones de otra manera de bailar.'},
+  {y:'2020s', t:'Open to Close', d:'Nace el formato más exigente: un solo artista ocho horas en cabina, sin soporte. Javier Bússola de la apertura al cierre.'},
+  {y:'2026', t:'30 años', d:'Cinco marcas activas, programación internacional y un archivo de tres décadas. Treinta años empujando la cultura electrónica.'}
+];
+
+/* ===========================================================
+   1 · fondo WebGL — grilla cromada que reacciona al cursor
+        (idéntico a V3)
+   =========================================================== */
+function initChromeGrid(){
+  if(reduceMotion.matches) return;
+  var canvas = document.getElementById('bggl');
+  if(!canvas || !canvas.getContext) return;
+  var gl = canvas.getContext('webgl', {antialias:false, alpha:false, powerPreference:'low-power'});
+  if(!gl) return;
+
+  var vsSource =
+    'attribute vec2 aPos;' +
+    'void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }';
+
+  var fsSource =
+    'precision mediump float;' +
+    'uniform vec2 uRes;' +
+    'uniform float uTime;' +
+    'uniform vec2 uMouse;' +
+    'const vec3 ink = vec3(0.008,0.016,0.039);' +
+    'const vec3 blue = vec3(0.086,0.545,1.0);' +
+    'const vec3 green = vec3(0.616,1.0,0.0);' +
+    'float gridLine(vec2 uv, float cell, float thickness){' +
+    '  vec2 g = fract(uv*cell);' +
+    '  vec2 d = min(g, 1.0-g);' +
+    '  float line = min(d.x, d.y);' +
+    '  return 1.0 - smoothstep(0.0, thickness, line);' +
+    '}' +
+    'void main(){' +
+    '  vec2 uv = gl_FragCoord.xy / uRes.xy;' +
+    '  vec2 p = uv*2.0 - 1.0;' +
+    '  p.x *= uRes.x/uRes.y;' +
+    '  vec2 m = uMouse*2.0 - 1.0;' +
+    '  m.x *= uRes.x/uRes.y;' +
+    '  float md = distance(p, m);' +
+    '  float pull = exp(-md*2.2) * 0.4;' +
+    '  float t = uTime*0.05;' +
+    '  vec2 flow = vec2(' +
+    '    sin(p.y*1.6 + t*1.3)*0.055 + sin(p.x*0.7 - t*0.8)*0.03,' +
+    '    cos(p.x*1.4 - t*1.1)*0.055 + cos(p.y*0.9 + t*0.6)*0.03' +
+    '  );' +
+    '  vec2 dir = p - m;' +
+    '  float dlen = length(dir);' +
+    '  vec2 warped = p + flow + (dir/(dlen+0.0001)) * pull;' +
+    '  float g1 = gridLine(warped, 11.0, 0.05);' +
+    '  float g2 = gridLine(warped*0.5, 5.0, 0.06) * 0.55;' +
+    '  float lines = clamp(g1*0.55 + g2, 0.0, 1.0);' +
+    '  float diag = (p.x+p.y)*0.5 - uTime*0.035;' +
+    '  float sweep = 1.0 - smoothstep(0.0, 0.55, abs(fract(diag)-0.5));' +
+    '  vec3 col = mix(ink, blue, 0.08 + lines*0.5);' +
+    '  col = mix(col, green, sweep*0.05);' +
+    '  col += blue * pull * 0.9;' +
+    '  float vig = 1.0 - smoothstep(0.2, 1.4, length(p));' +
+    '  col *= mix(0.35, 1.0, vig);' +
+    '  gl_FragColor = vec4(col, 1.0);' +
+    '}';
+
+  function compile(type, src){
+    var sh = gl.createShader(type);
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if(!gl.getShaderParameter(sh, gl.COMPILE_STATUS)){
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+  var vs = compile(gl.VERTEX_SHADER, vsSource);
+  var fs = compile(gl.FRAGMENT_SHADER, fsSource);
+  if(!vs || !fs) return;
+  var program = gl.createProgram();
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if(!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  gl.useProgram(program);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  var aPos = gl.getAttribLocation(program, 'aPos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  var uRes = gl.getUniformLocation(program, 'uRes');
+  var uTime = gl.getUniformLocation(program, 'uTime');
+  var uMouse = gl.getUniformLocation(program, 'uMouse');
+
+  var mouse = [0.6, 0.55], targetMouse = [0.6, 0.55];
+  var dpr = Math.min(window.devicePixelRatio || 1, finePointer.matches ? 2 : 1.4);
+
+  function resize(){
+    var w = Math.max(1, Math.floor(innerWidth * dpr));
+    var h = Math.max(1, Math.floor(innerHeight * dpr));
+    if(canvas.width !== w || canvas.height !== h){
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+  }
+  resize();
+  addEventListener('resize', resize, {passive:true});
+
+  addEventListener('pointermove', function(e){
+    targetMouse[0] = e.clientX / innerWidth;
+    targetMouse[1] = 1 - e.clientY / innerHeight;
+  }, {passive:true});
+
+  var raf = null, running = false, start = performance.now();
+
+  function frame(now){
+    if(!running) return;
+    mouse[0] += (targetMouse[0] - mouse[0]) * 0.06;
+    mouse[1] += (targetMouse[1] - mouse[1]) * 0.06;
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+    gl.uniform1f(uTime, (now - start) / 1000);
+    gl.uniform2f(uMouse, mouse[0], mouse[1]);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    raf = requestAnimationFrame(frame);
+  }
+  function startLoop(){
+    if(running) return;
+    running = true;
+    raf = requestAnimationFrame(frame);
+  }
+  function stopLoop(){
+    running = false;
+    if(raf) cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  startLoop();
+  requestAnimationFrame(function(){ canvas.classList.add('is-ready'); });
+
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden) stopLoop(); else startLoop();
+  });
+  canvas.addEventListener('webglcontextlost', function(e){ e.preventDefault(); stopLoop(); });
+}
+
+/* ===========================================================
+   2 · cursor a medida (idéntico a V3)
+   =========================================================== */
+function initCursor(){
+  if(!finePointer.matches || reduceMotion.matches) return;
+  var root = document.querySelector('.cursor');
+  var dot = document.querySelector('.cursor-dot');
+  var ring = document.querySelector('.cursor-ring');
+  if(!root || !dot || !ring) return;
+  htmlEl.classList.add('has-cursor');
+
+  var mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+
+  addEventListener('pointermove', function(e){
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0) translate(-50%,-50%)';
+  }, {passive:true});
+  addEventListener('pointermove', function(){ root.classList.add('is-visible'); }, {once:true, passive:true});
+  document.addEventListener('mouseleave', function(){ root.classList.remove('is-visible'); });
+  document.addEventListener('pointerdown', function(){ ring.classList.add('is-down'); }, {passive:true});
+  document.addEventListener('pointerup', function(){ ring.classList.remove('is-down'); }, {passive:true});
+
+  var magnets = 'a,button,input,.stub,.world-tab,.tanda,.ticket-thumb,.rrpp,.gal button,.tl';
+  document.addEventListener('pointerover', function(e){
+    if(e.target.closest(magnets)) ring.classList.add('is-active');
+  });
+  document.addEventListener('pointerout', function(e){
+    if(e.target.closest(magnets)) ring.classList.remove('is-active');
+  });
+
+  (function loop(){
+    rx += (mx - rx) * 0.16;
+    ry += (my - ry) * 0.16;
+    ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0) translate(-50%,-50%)';
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ===========================================================
+   3 · botones magnéticos
+   =========================================================== */
+function initMagnetic(){
+  if(!finePointer.matches || reduceMotion.matches) return;
+  document.querySelectorAll('[data-magnetic]').forEach(function(el){
+    var bounds = null;
+    el.addEventListener('pointerenter', function(){
+      bounds = el.getBoundingClientRect();
+      el.style.transition = 'transform .12s linear';
+    });
+    el.addEventListener('pointermove', function(e){
+      if(!bounds) bounds = el.getBoundingClientRect();
+      var relX = e.clientX - (bounds.left + bounds.width/2);
+      var relY = e.clientY - (bounds.top + bounds.height/2);
+      el.style.transform = 'translate(' + (relX*0.16).toFixed(1) + 'px,' + (relY*0.22).toFixed(1) + 'px)';
+    });
+    el.addEventListener('pointerleave', function(){
+      el.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
+      el.style.transform = '';
+      bounds = null;
+    });
+  });
+}
+
+/* ===========================================================
+   4 · tilt 3D del flyer del hero
+   =========================================================== */
+function initTilt(){
+  if(!finePointer.matches || reduceMotion.matches) return;
+  document.querySelectorAll('[data-tilt]').forEach(function(card){
+    card.addEventListener('pointermove', function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left)/r.width - 0.5;
+      var py = (e.clientY - r.top)/r.height - 0.5;
+      card.style.transform = 'rotate(2.2deg) perspective(900px) rotateX(' + (-py*6).toFixed(2) + 'deg) rotateY(' + (px*8).toFixed(2) + 'deg)';
+    });
+    card.addEventListener('pointerleave', function(){ card.style.transform = ''; });
+  });
+}
+
+/* ===========================================================
+   5 · scramble text (nav)
+   =========================================================== */
+var SCRAMBLE_CHARS = '!<>-_\\/[]{}—=+*^?#';
+function Scramble(el){
+  this.el = el; this.text = el.textContent;
+  this.queue = []; this.frame = 0; this.frameRequest = null;
+}
+Scramble.prototype.run = function(){
+  if(reduceMotion.matches){ this.el.textContent = this.text; return; }
+  var oldText = this.el.textContent, newText = this.text;
+  var length = Math.max(oldText.length, newText.length);
+  this.queue = [];
+  for(var i=0;i<length;i++){
+    var from = oldText[i] || '';
+    var to = newText[i] || '';
+    var st = Math.floor(Math.random()*10);
+    var en = st + Math.floor(Math.random()*10);
+    this.queue.push({from:from,to:to,start:st,end:en,char:''});
+  }
+  if(this.frameRequest) cancelAnimationFrame(this.frameRequest);
+  this.frame = 0;
+  this.update();
+};
+Scramble.prototype.update = function(){
+  var out = '', complete = 0;
+  for(var i=0;i<this.queue.length;i++){
+    var q = this.queue[i];
+    if(this.frame >= q.end){ complete++; out += q.to; }
+    else if(this.frame >= q.start){
+      if(!q.char || Math.random() < 0.28){
+        q.char = SCRAMBLE_CHARS[Math.floor(Math.random()*SCRAMBLE_CHARS.length)];
+      }
+      out += q.char;
+    } else out += q.from;
+  }
+  this.el.textContent = out;
+  if(complete === this.queue.length) return;
+  this.frame++;
+  var self = this;
+  this.frameRequest = requestAnimationFrame(function(){ self.update(); });
+};
+function initScramble(){
+  document.querySelectorAll('[data-scramble]').forEach(function(el){
+    var sc = new Scramble(el);
+    el.addEventListener('pointerenter', function(){ sc.run(); });
+  });
+}
+
+/* ===========================================================
+   6 · reveal al hacer scroll
+   =========================================================== */
+var revealIO = null;
+function initReveal(){
+  if(reduceMotion.matches){
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('is-in'); });
+    return;
+  }
+  revealIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-in');
+        revealIO.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+  observeReveals();
+}
+function observeReveals(){
+  if(reduceMotion.matches || !revealIO) return;
+  document.querySelectorAll('[data-reveal]:not(.is-in)').forEach(function(el){ revealIO.observe(el); });
+}
+
+/* ===========================================================
+   7 · marquee cinético
+   =========================================================== */
+function initMarqueeSkew(){
+  if(reduceMotion.matches) return;
+  var track = document.querySelector('.marquee');
+  if(!track) return;
+  var lastY = scrollY, vel = 0, current = 0;
+  (function loop(){
+    var dy = scrollY - lastY;
+    lastY = scrollY;
+    vel += (dy - vel) * 0.18;
+    var target = Math.max(-14, Math.min(14, vel * 0.6));
+    current += (target - current) * 0.12;
+    track.style.transform = 'skewX(' + current.toFixed(2) + 'deg)';
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ===========================================================
+   8 · sello cromado
+   =========================================================== */
+function initChromeSeal(){
+  if(reduceMotion.matches) return;
+  var filter = document.querySelector('#chromeLiquid feTurbulence');
+  var host = document.querySelector('[data-chrome-seal]');
+  if(!filter || !host) return;
+  var visible = false;
+  new IntersectionObserver(function(entries){
+    visible = entries[0].isIntersecting;
+  }, {threshold:0}).observe(host);
+  var t = 0;
+  setInterval(function(){
+    if(!visible || document.hidden) return;
+    t += 1;
+    var bx = (0.010 + Math.sin(t*0.09)*0.006).toFixed(4);
+    var by = (0.024 + Math.cos(t*0.07)*0.008).toFixed(4);
+    filter.setAttribute('baseFrequency', bx + ' ' + by);
+  }, 90);
+}
+
+/* ===========================================================
+   9 · navegación entre vistas
+   =========================================================== */
+var views = document.querySelectorAll('.view');
+var tabs = document.querySelectorAll('.tab');
+var navtabs = document.getElementById('navtabs');
+var navburger = document.getElementById('navburger');
+
+function go(id, acc){
+  if(!document.getElementById(id)) return;
+  var run = function(){
+    views.forEach(function(v){ v.classList.toggle('on', v.id === id); });
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.go === id)); });
+    htmlEl.style.setProperty('--acc', acc || '#168BFF');
+    htmlEl.style.setProperty('--acc-rgb', acc ? hexToRgb(acc) : '22,139,255');
+    scrollTo({top:0, behavior:'instant'});
+    if(navtabs) navtabs.classList.remove('is-open');
+    if(navburger) navburger.setAttribute('aria-expanded','false');
+    observeReveals();
+  };
+  if(document.startViewTransition && !reduceMotion.matches){
+    document.startViewTransition(run);
+  } else run();
+}
+function hexToRgb(hex){
+  var h = hex.replace('#','');
+  if(h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+  var n = parseInt(h,16);
+  return [(n>>16)&255, (n>>8)&255, n&255].join(',');
+}
+document.addEventListener('click', function(e){
+  var el = e.target.closest('[data-go]');
+  if(!el) return;
+  if(el.tagName === 'A' && el.target === '_blank') return;
+  e.preventDefault();
+  go(el.dataset.go, el.dataset.acc);
+});
+if(navburger){
+  navburger.addEventListener('click', function(){
+    var open = navtabs.classList.toggle('is-open');
+    navburger.setAttribute('aria-expanded', String(open));
+  });
+}
+
+/* ===========================================================
+   10 · fechas: render + orden automático por fecha real
+   =========================================================== */
+function esc(s){
+  return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+var DIAS = ['dom','lun','mar','mié','jue','vie','sáb'];
+var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+var MESES_L = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+function evDate(ev){ return new Date(ev.iso); }
+function shortDate(d){ return DIAS[d.getDay()] + ' ' + d.getDate() + ' ' + MESES[d.getMonth()]; }
+function longDate(d){ return DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES_L[d.getMonth()] + ' de ' + d.getFullYear(); }
+
+var now = new Date();
+function isLive(ev){ return evDate(ev).getTime() + 8*3600*1000 > now.getTime(); }
+
+var upcoming, past;
+if(MODO_DISENO){
+  /* todas activas: primero las que aún no pasaron, después el resto */
+  var live = EVENTS.filter(isLive).sort(function(a,b){ return evDate(a) - evDate(b); });
+  var rest = EVENTS.filter(function(ev){ return !isLive(ev); }).sort(function(a,b){ return evDate(b) - evDate(a); });
+  upcoming = live.concat(rest);
+  past = [];
+} else {
+  upcoming = EVENTS.filter(isLive).sort(function(a,b){ return evDate(a) - evDate(b); });
+  past = EVENTS.filter(function(ev){ return !isLive(ev); }).sort(function(a,b){ return evDate(b) - evDate(a); });
+}
+var nextEvent = upcoming[0] || EVENTS[0];
+
+function stubHTML(ev, isPast){
+  var d = evDate(ev);
+  return '<button class="stub sheen' + (isPast ? ' is-past' : '') + '" data-event="' + esc(ev.id) + '" style="border-left-color:' + esc(ev.acc) + '">' +
+    '<span class="stub-thumb"><img src="' + esc(ev.art) + '" alt="" loading="lazy" decoding="async"></span>' +
+    '<div class="stub-main">' +
+      '<span class="date" style="color:' + esc(ev.acc) + '">' + esc(shortDate(d)) + ' · ' + esc(d.getFullYear()) + ' · ' + esc(ev.hours.split('—')[0].trim()) + '</span>' +
+      '<div class="name">' + esc(ev.name) + (ev.sub ? ' · ' + esc(ev.sub) : '') + '</div>' +
+      '<div class="meta">' + esc(ev.brand) + ' · ' + esc(ev.venue) + ' · ' + esc(ev.addr) + ' · ' + esc(ev.age) + '</div>' +
+    '</div>' +
+    '<div class="stub-side">' +
+      '<span class="badge ' + (isPast ? 'done' : 'live') + '">' + esc(isPast ? 'Finalizada' : ev.badge) + '</span>' +
+      '<span class="price">' + esc(ev.from) + '</span>' +
+      '<span class="go" style="color:' + esc(ev.acc) + '">' + (isPast ? 'Ver recap' : 'Ver fecha') + '</span>' +
+    '</div>' +
+  '</button>';
+}
+
+function panelHTML(ev, isPast){
+  var d = evDate(ev);
+  var tiers = (ev.tiers || []).map(function(t){
+    return '<div><b>' + esc(t[0]) + '</b><span>' + esc(t[1]) + '</span></div>';
+  }).join('');
+  var cta = '';
+  if(!isPast && ev.cta) cta = '<button class="btn" data-go="' + esc(ev.cta) + '" data-magnetic>Comprar entradas</button>';
+  return '<div class="date-event' + (isPast ? ' is-past' : '') + '" id="ev-' + esc(ev.id) + '" style="--event:' + esc(ev.acc) + ';--event-rgb:' + esc(ev.accRgb) + '">' +
+    '<button class="de-art" data-lightbox-src="' + esc(ev.art) + '" data-lightbox-cap="' + esc(ev.name + ' · ' + ev.sub) + '">' +
+      '<img src="' + esc(ev.art) + '" alt="Flyer de ' + esc(ev.name) + '" loading="lazy">' +
+    '</button>' +
+    '<div class="date-event-info">' +
+      '<span class="eyebrow">' + esc(longDate(d)) + ' · ' + esc(ev.hours) + '</span>' +
+      '<h3>' + esc(ev.name) + (ev.sub ? '<br>' + esc(ev.sub) : '') + '</h3>' +
+      '<p class="lede">' + esc(ev.lede) + '</p>' +
+      (tiers ? '<div class="date-prices">' + tiers + '</div>' : '') +
+      (ev.callout ? '<div class="event-callout">' + esc(ev.callout) + '</div>' : '') +
+      (ev.note ? '<div class="event-note">' + ev.note + '</div>' : '') +
+      (ev.fine ? '<p class="fineprint">' + esc(ev.fine) + '</p>' : '') +
+      cta +
+    '</div>' +
+  '</div>';
+}
+
+function renderAgenda(){
+  var homeStubs = document.getElementById('homeStubs');
+  var agendaStubs = document.getElementById('agendaStubs');
+  var panels = document.getElementById('agendaPanels');
+  var pastStubs = document.getElementById('pastStubs');
+  var pastWrap = document.getElementById('pastWrap');
+
+  var upHTML = upcoming.map(function(ev){ return stubHTML(ev, false); }).join('');
+  if(homeStubs) homeStubs.innerHTML = upHTML || '<p class="set-empty"><b>Sin fechas cargadas</b>Agregá una fecha nueva en el array EVENTS del código.</p>';
+  if(agendaStubs) agendaStubs.innerHTML = upHTML || '<p class="set-empty"><b>Sin fechas próximas</b>Agregá una fecha nueva en el array EVENTS del código.</p>';
+  if(panels) panels.innerHTML = upcoming.map(function(ev){ return panelHTML(ev, false); }).join('');
+
+  if(past.length && pastStubs && pastWrap){
+    pastStubs.innerHTML = past.map(function(ev){ return stubHTML(ev, true); }).join('');
+    pastWrap.style.display = '';
+    if(panels) panels.innerHTML += past.map(function(ev){ return panelHTML(ev, true); }).join('');
+  }
+
+  var n = upcoming.length;
+  var label = n === 1 ? '1 fecha activa' : n + ' fechas activas';
+  var c1 = document.getElementById('homeAgendaCount');
+  var c2 = document.getElementById('agendaCount');
+  if(c1) c1.textContent = label;
+  if(c2) c2.textContent = label + (past.length ? ' · ' + past.length + ' en el archivo' : '');
+
+  document.addEventListener('click', function(e){
+    var s = e.target.closest('[data-event]');
+    if(!s) return;
+    var id = s.dataset.event;
+    var inAgenda = document.getElementById('agenda').classList.contains('on');
+    if(!inAgenda){
+      go('agenda');
+      setTimeout(function(){ scrollToEvent(id); }, 360);
+    } else scrollToEvent(id);
+  });
+}
+function scrollToEvent(id){
+  var t = document.getElementById('ev-' + id);
+  if(t) t.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+/* --- barra próxima fecha + countdown --- */
+function renderNext(){
+  if(!nextEvent) return;
+  var d = evDate(nextEvent);
+  var nbName = document.getElementById('nbName');
+  var nbMeta = document.getElementById('nbMeta');
+  if(nbName) nbName.textContent = nextEvent.name + (nextEvent.sub ? ' · ' + nextEvent.sub : '');
+  if(nbMeta) nbMeta.textContent = longDate(d) + ' · ' + nextEvent.venue + ' · desde ' + nextEvent.from;
+  var poster = document.getElementById('heroPoster');
+  if(poster){ poster.src = nextEvent.art; poster.alt = 'Flyer de ' + nextEvent.name; }
+  var co = document.getElementById('coEyebrow');
+  if(co) co.textContent = nextEvent.name + (nextEvent.sub ? ' ' + nextEvent.sub : '') + ' · ' + shortDate(d) + ' · ' + nextEvent.venue;
+  var doorEvent = document.getElementById('doorEvent');
+  var doorMeta = document.getElementById('doorMeta');
+  if(doorEvent) doorEvent.textContent = nextEvent.name;
+  if(doorMeta) doorMeta.textContent = shortDate(d) + ' · ' + nextEvent.venue + ' · operador: Fede';
+
+  var els = {d:document.getElementById('cdD'), h:document.getElementById('cdH'), m:document.getElementById('cdM'), s:document.getElementById('cdS')};
+  if(!els.d) return;
+  function pad(n){ return (n<10 ? '0' : '') + n; }
+  function tick(){
+    var diff = d.getTime() - Date.now();
+    if(diff <= 0){
+      els.d.textContent = '00'; els.h.textContent = '00'; els.m.textContent = '00'; els.s.textContent = '00';
+      return;
+    }
+    var s = Math.floor(diff/1000);
+    els.d.textContent = pad(Math.floor(s/86400));
+    els.h.textContent = pad(Math.floor(s%86400/3600));
+    els.m.textContent = pad(Math.floor(s%3600/60));
+    els.s.textContent = pad(s%60);
+  }
+  tick();
+  setInterval(function(){ if(!document.hidden) tick(); }, 1000);
+}
+
+/* ===========================================================
+   11 · fiestas / mundos
+   =========================================================== */
+function renderWorlds(){
+  var rail = document.getElementById('worldRail');
+  var panel = document.getElementById('worldPanel');
+  var home = document.getElementById('homeWorlds');
+  if(!rail || !panel) return;
+
+  rail.innerHTML = WORLDS.map(function(w, i){
+    var full = w.name + (w.name2 ? ' ' + w.name2 : '');
+    return '<button class="world-tab" role="tab" data-world="' + i + '" aria-selected="' + (i===0) + '" style="--c:' + esc(w.c) + '">' +
+      (w.logo ? '<img src="' + esc(w.logo) + '" alt="">' : '<span style="width:34px;height:26px;display:block;border-left:2px solid ' + esc(w.c) + '"></span>') +
+      '<span><span class="wt-n">' + esc(full) + '</span><span class="wt-k">' + esc(w.kicker) + '</span></span>' +
+    '</button>';
+  }).join('');
+
+  if(home){
+    home.innerHTML = WORLDS.map(function(w, i){
+      var full = w.name + (w.name2 ? '<br>' + esc(w.name2) : '');
+      return '<button class="bcard" data-world-go="' + i + '" style="--c:' + esc(w.c) + ';--bg:url(\'' + esc(w.media) + '\')">' +
+        '<span class="bcard-bg" aria-hidden="true"></span>' +
+        '<span class="b-go" aria-hidden="true">→</span>' +
+        (w.logo ? '<img class="b-logo" src="' + esc(w.logo) + '" alt="" loading="lazy">' : '<span class="b-mark" aria-hidden="true"></span>') +
+        '<h3>' + full + '</h3>' +
+        '<span class="b-k">' + esc(w.kicker) + '</span>' +
+      '</button>';
+    }).join('');
+  }
+
+  function paint(i){
+    var w = WORLDS[i];
+    var full = w.name + (w.name2 ? '<br><em>' + esc(w.name2) + '</em>' : '');
+    var facts = (w.facts||[]).map(function(f){
+      return '<div><span class="k2">' + esc(f[0]) + '</span><b>' + esc(f[1]) + '</b></div>';
+    }).join('');
+    var sound = (w.sound||[]).map(function(s){ return '<span>' + esc(s) + '</span>'; }).join('');
+    var shots = (w.shots||[]).map(function(s){
+      return '<button data-lightbox-src="' + esc(s) + '" data-lightbox-cap="' + esc(w.name + (w.name2 ? ' ' + w.name2 : '')) + '"><img src="' + esc(s) + '" alt="" loading="lazy"></button>';
+    }).join('');
+    var extraGo = w.go ? '<button class="btn ghost sm" data-go="' + esc(w.go) + '">' + esc(w.goLabel || 'Ver más →') + '</button>' : '';
+
+    panel.innerHTML =
+      '<div class="world-panel" style="--c:' + esc(w.c) + '">' +
+        '<div class="world-media" style="background-image:url(\'' + esc(w.media) + '\')">' +
+          '<div class="world-media-in">' +
+            (w.logo ? '<img class="world-logo" src="' + esc(w.logo) + '" alt="">' : '') +
+            '<h3>' + full + '</h3>' +
+          '</div>' +
+        '</div>' +
+        '<div class="world-body">' +
+          '<div>' +
+            '<span class="eyebrow" style="color:' + esc(w.c) + '">' + esc(w.kicker) + '</span>' +
+            '<p class="lede" style="margin-top:12px">' + esc(w.lede) + '</p>' +
+            '<div class="world-sound">' + sound + '</div>' +
+            '<div class="world-actions"><button class="btn sm" data-go="agenda" style="background:' + esc(w.c) + '">Ver fechas</button>' + extraGo + '</div>' +
+          '</div>' +
+          '<div class="world-facts">' + facts + '</div>' +
+        '</div>' +
+        (shots ? '<div class="world-shots">' + shots + '</div>' : '') +
+      '</div>';
+
+    rail.querySelectorAll('.world-tab').forEach(function(t){
+      t.setAttribute('aria-selected', String(+t.dataset.world === i));
+    });
+    htmlEl.style.setProperty('--acc', w.c);
+    htmlEl.style.setProperty('--acc-rgb', hexToRgb(w.c));
+    initMagnetic();
+  }
+
+  rail.addEventListener('click', function(e){
+    var t = e.target.closest('[data-world]');
+    if(t) paint(+t.dataset.world);
+  });
+  if(home){
+    home.addEventListener('click', function(e){
+      var t = e.target.closest('[data-world-go]');
+      if(!t) return;
+      go('fiestas');
+      paint(+t.dataset.worldGo);
+    });
+  }
+  paint(0);
+}
+
+/* ===========================================================
+   12 · sets (SoundCloud / YouTube con carga diferida)
+   =========================================================== */
+function scEmbed(url){
+  return 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(url) +
+    '&color=%23168bff&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true';
+}
+function ytId(url){
+  var m = url.match(/(?:v=|youtu\.be\/|embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+function ytList(url){
+  var m = url.match(/[?&]list=([A-Za-z0-9_-]+)/);
+  return m ? m[1] : null;
+}
+function ytEmbed(url){
+  var id = ytId(url), list = ytList(url);
+  if(id) return 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+  if(list) return 'https://www.youtube-nocookie.com/embed/videoseries?list=' + list + '&autoplay=1&rel=0';
+  return null;
+}
+function embedFor(s){
+  return s.platform === 'sc' ? scEmbed(s.url) : ytEmbed(s.url);
+}
+
+function renderSets(){
+  var feat = document.getElementById('featPlayer');
+  var rail = document.getElementById('setRail');
+  if(!feat || !rail) return;
+
+  var featured = SETS.filter(function(s){ return s.featured; })[0] || SETS[0];
+
+  if(featured){
+    feat.innerHTML =
+      '<button class="player-facade" data-embed="' + esc(embedFor(featured) || '') + '" style="--bg:url(\'' + esc(featured.art || 'assets/javi.jpg') + '\')">' +
+        '<span class="pf-play" aria-hidden="true">▶</span>' +
+        '<span class="pf-k">' + esc(featured.platform === 'sc' ? 'SoundCloud' : 'YouTube') + '</span>' +
+        '<h3>' + esc(featured.artist) + '</h3>' +
+        '<span class="pf-m">' + esc(featured.title) + ' · ' + esc(featured.meta || '') + '</span>' +
+      '</button>';
+  } else {
+    feat.innerHTML = '<div class="set-empty" style="margin:18px"><b>Sin sets cargados</b>Pegá la URL de un set de SoundCloud o YouTube en el array SETS del código y aparece acá.</div>';
+  }
+
+  var rest = SETS.filter(function(s){ return s !== featured; });
+  var cards = rest.map(function(s){
+    return '<button class="set-card ' + (s.platform === 'sc' ? 'is-sc' : 'is-yt') + '" data-embed="' + esc(embedFor(s) || '') + '" data-title="' + esc(s.artist + ' · ' + s.title) + '" data-art="' + esc(s.art || '') + '" data-plat="' + esc(s.platform) + '">' +
+      '<span class="sc-ico">' + (s.platform === 'sc' ? '≋' : '▶') + '</span>' +
+      '<span><b>' + esc(s.artist) + '</b><span>' + esc(s.title) + '</span></span>' +
+      '<i>' + esc(s.meta || '') + '</i>' +
+    '</button>';
+  }).join('');
+
+  rail.innerHTML = cards +
+    '<div class="set-empty"><b>Sumá tus sets</b>Pegá el link de cualquier set de SoundCloud o video de YouTube en el array <strong>SETS</strong>, arriba en el código, y aparece en esta lista con su reproductor.</div>';
+
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-embed]');
+    if(!b || !b.dataset.embed) return;
+    var box = b.closest('.player');
+    if(box){
+      box.innerHTML = '<iframe src="' + b.dataset.embed + '" loading="lazy" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Reproductor de set"></iframe>';
+      return;
+    }
+    // una tarjeta de la lista: suena en el reproductor grande
+    if(b.classList.contains('set-card')){
+      feat.innerHTML = '<iframe src="' + b.dataset.embed + '" loading="lazy" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="Reproductor de set"></iframe>';
+      feat.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+  });
+}
+
+/* ===========================================================
+   13 · archivo visual + lightbox
+   =========================================================== */
+var galItems = [];
+function renderGallery(){
+  var gal = document.getElementById('gal');
+  var filters = document.getElementById('galFilters');
+  var count = document.getElementById('galCount');
+  if(!gal) return;
+
+  var kinds = [
+    {k:'todo', label:'Todo'},
+    {k:'pista', label:'Pista y backstage'},
+    {k:'flyer', label:'Gráfica y flyers'}
+  ];
+  if(filters){
+    filters.innerHTML = kinds.map(function(f, i){
+      return '<button data-filter="' + f.k + '" aria-pressed="' + (i===0) + '">' + esc(f.label) + '</button>';
+    }).join('');
+  }
+  if(count) count.textContent = GALLERY.length + ' piezas';
+
+  function paint(kind){
+    var list = kind === 'todo' ? GALLERY : GALLERY.filter(function(g){ return g.kind === kind; });
+    galItems = list;
+    gal.innerHTML = list.map(function(g, i){
+      return '<figure>' +
+        '<button data-gal="' + i + '" aria-label="Ver ' + esc(g.cap) + ' en grande">' +
+          '<img src="' + esc(g.src) + '" alt="' + esc(g.cap) + '" loading="lazy" decoding="async">' +
+          '<span class="yr">' + esc(g.yr) + '</span>' +
+        '</button>' +
+        '<figcaption>' + esc(g.cap) + '</figcaption>' +
+      '</figure>';
+    }).join('');
+  }
+  paint('todo');
+
+  if(filters){
+    filters.addEventListener('click', function(e){
+      var b = e.target.closest('[data-filter]');
+      if(!b) return;
+      filters.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', String(x === b)); });
+      paint(b.dataset.filter);
+    });
+  }
+}
+
+/* --- lightbox --- */
+var lb = document.getElementById('lightbox');
+var lbImg = document.getElementById('lbImg');
+var lbCap = document.getElementById('lbCap');
+var lbIndex = 0, lbList = [];
+var lbSupported = lb && typeof lb.showPopover === 'function';
+
+function lbOpen(list, i){
+  if(!lb) return;
+  lbList = list; lbIndex = i;
+  lbPaint();
+  if(lbSupported){ try{ lb.showPopover(); } catch(e){ lb.classList.add('is-open'); } }
+  else lb.classList.add('is-open');
+}
+function lbClose(){
+  if(!lb) return;
+  if(lbSupported){ try{ lb.hidePopover(); } catch(e){} }
+  lb.classList.remove('is-open');
+}
+function lbPaint(){
+  var it = lbList[lbIndex];
+  if(!it) return;
+  lbImg.src = it.src;
+  lbImg.alt = it.cap || '';
+  lbCap.innerHTML = (it.yr ? '<em>' + esc(it.yr) + '</em>' : '') + esc(it.cap || '');
+}
+function lbStep(n){
+  if(!lbList.length) return;
+  lbIndex = (lbIndex + n + lbList.length) % lbList.length;
+  lbPaint();
+}
+document.addEventListener('click', function(e){
+  var g = e.target.closest('[data-gal]');
+  if(g){ lbOpen(galItems, +g.dataset.gal); return; }
+  var one = e.target.closest('[data-lightbox-src]');
+  if(one){
+    lbOpen([{src:one.dataset.lightboxSrc, cap:one.dataset.lightboxCap || '', yr:''}], 0);
+    return;
+  }
+});
+var lbPrevBtn = document.getElementById('lbPrev');
+var lbNextBtn = document.getElementById('lbNext');
+var lbCloseBtn = document.getElementById('lbClose');
+if(lbPrevBtn) lbPrevBtn.onclick = function(){ lbStep(-1); };
+if(lbNextBtn) lbNextBtn.onclick = function(){ lbStep(1); };
+if(lbCloseBtn) lbCloseBtn.onclick = lbClose;
+addEventListener('keydown', function(e){
+  var open = lb && (lb.classList.contains('is-open') || (lbSupported && lb.matches(':popover-open')));
+  if(!open) return;
+  if(e.key === 'ArrowLeft') lbStep(-1);
+  else if(e.key === 'ArrowRight') lbStep(1);
+  else if(e.key === 'Escape') lbClose();
+});
+if(lb){
+  lb.addEventListener('click', function(e){
+    if(e.target === lb || e.target.classList.contains('lb-stage')) lbClose();
+  });
+}
+
+/* --- mosaico del inicio (puerta al archivo) --- */
+function renderMosaic(){
+  var m = document.getElementById('homeMosaic');
+  if(!m) return;
+  var pick = GALLERY.slice(0, 7);
+  m.innerHTML = pick.map(function(g, i){
+    return '<button data-mosaic="' + i + '" aria-label="Ver ' + esc(g.cap) + ' en grande">' +
+      '<img src="' + esc(g.src) + '" alt="' + esc(g.cap) + '" loading="lazy" decoding="async">' +
+    '</button>';
+  }).join('') +
+  '<button class="more" data-go="archivo">+' + (GALLERY.length - pick.length) + '<br>ver todo</button>';
+
+  m.addEventListener('click', function(e){
+    var b = e.target.closest('[data-mosaic]');
+    if(b) lbOpen(pick, +b.dataset.mosaic);
+  });
+}
+
+/* ===========================================================
+   14 · línea de tiempo
+   =========================================================== */
+function renderTimeline(){
+  var tl = document.getElementById('timeline');
+  if(!tl) return;
+  tl.innerHTML = TIMELINE.map(function(t){
+    return '<article class="tl"><b>' + esc(t.y) + '</b><h4>' + esc(t.t) + '</h4><p>' + esc(t.d) + '</p></article>';
+  }).join('');
+}
+
+/* ===========================================================
+   15 · videos con carga diferida
+   =========================================================== */
+function initVideos(){
+  document.querySelectorAll('.vbox').forEach(function(box){
+    var facade = box.querySelector('.vfacade');
+    if(!facade) return;
+    facade.addEventListener('click', function(){
+      var v = document.createElement('video');
+      v.src = box.dataset.video;
+      v.poster = box.dataset.poster || '';
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = 'auto';
+      v.setAttribute('aria-label', 'Video de Javier Bússola');
+      box.innerHTML = '';
+      box.appendChild(v);
+      v.play().catch(function(){});
+    });
+  });
+}
+
+/* ===========================================================
+   16 · checkout
+   =========================================================== */
+var qtyEl = document.getElementById('qty');
+var lineNameEl = document.getElementById('lineName');
+var lineTotalEl = document.getElementById('lineTotal');
+var grandTotalEl = document.getElementById('grandTotal');
+var issuedEl = document.getElementById('issued');
+var checkoutArtworkEl = document.getElementById('checkoutArtwork');
+
+var ticketPrice = 45000, ticketQty = 2, tandaName = 'General · 1era tanda';
+function fmt(n){ return '$' + n.toLocaleString('es-AR'); }
+function paint(){
+  if(!lineNameEl) return;
+  lineNameEl.textContent = tandaName + ' × ' + ticketQty;
+  lineTotalEl.textContent = fmt(ticketPrice * ticketQty);
+  grandTotalEl.textContent = fmt(ticketPrice * ticketQty);
+}
+document.querySelectorAll('.tanda:not(.gone)').forEach(function(t){
+  t.addEventListener('click', function(){
+    document.querySelectorAll('.tanda').forEach(function(x){ x.setAttribute('aria-checked','false'); });
+    t.setAttribute('aria-checked','true');
+    ticketPrice = +t.dataset.price;
+    tandaName = t.querySelector('.tn').textContent;
+    paint();
+  });
+});
+var minusBtn = document.getElementById('minus'), plusBtn = document.getElementById('plus');
+if(plusBtn) plusBtn.onclick = function(){ if(ticketQty<4){ ticketQty++; qtyEl.textContent = ticketQty; paint(); } };
+if(minusBtn) minusBtn.onclick = function(){ if(ticketQty>1){ ticketQty--; qtyEl.textContent = ticketQty; paint(); } };
+
+function fillIssuedHeader(){
+  if(!nextEvent) return;
+  var d = evDate(nextEvent);
+  var w = document.getElementById('issuedWhen');
+  var ev = document.getElementById('issuedEvent');
+  var vn = document.getElementById('issuedVenue');
+  if(w) w.textContent = shortDate(d).toUpperCase() + ' ' + d.getFullYear() + ' · ' + nextEvent.hours.split('—')[0].trim();
+  if(ev) ev.textContent = nextEvent.name + (nextEvent.sub ? ' · ' + nextEvent.sub : '');
+  if(vn) vn.textContent = nextEvent.venue + ' · ' + nextEvent.addr;
+}
+function showTicket(){
+  var name = document.getElementById('buyerName');
+  var email = document.getElementById('buyerEmail');
+  var dni = document.getElementById('buyerDni');
+  if(!name.value.trim() || !email.validity.valid || !email.value.trim() || !dni.value.trim()){
+    [name,email,dni].forEach(function(field){ if(!field.value.trim() || !field.validity.valid) field.reportValidity(); });
+    return;
+  }
+  var code = 'RPC-30-' + Math.random().toString(16).slice(2,6).toUpperCase() + '-' + Math.random().toString(16).slice(2,6).toUpperCase();
+  fillIssuedHeader();
+  document.getElementById('issuedOwner').textContent = name.value.trim() + ' · DNI ' + dni.value.trim();
+  document.getElementById('issuedCode').textContent = code;
+  document.getElementById('issuedCount').textContent = 'Entrada 1 de ' + ticketQty + ' · válida una sola vez';
+  try{
+    localStorage.setItem('rpc-demo-ticket', JSON.stringify({name:name.value.trim(), email:email.value.trim(), dni:dni.value.trim(), code:code, qty:ticketQty, price:ticketPrice, tanda:tandaName}));
+  }catch(e){}
+  issuedEl.style.display = 'block';
+  issuedEl.scrollIntoView({behavior:'smooth'});
+}
+var payBtn = document.getElementById('pay'), resetBtn = document.getElementById('reset');
+if(payBtn) payBtn.onclick = showTicket;
+if(resetBtn) resetBtn.onclick = function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('rpc-demo-ticket'); }catch(e){}
+  if(!saved) return showTicket();
+  try {
+    var ticket = JSON.parse(saved);
+    fillIssuedHeader();
+    document.getElementById('issuedOwner').textContent = ticket.name + ' · DNI ' + ticket.dni;
+    document.getElementById('issuedCode').textContent = ticket.code;
+    document.getElementById('issuedCount').textContent = 'Entrada 1 de ' + ticket.qty + ' · válida una sola vez';
+    issuedEl.style.display = 'block';
+    issuedEl.scrollIntoView({behavior:'smooth'});
+  } catch(e) { showTicket(); }
+};
+paint();
+
+document.querySelectorAll('.ticket-thumb').forEach(function(thumb){
+  thumb.addEventListener('click', function(){
+    document.querySelectorAll('.ticket-thumb').forEach(function(item){ item.setAttribute('aria-selected','false'); });
+    thumb.setAttribute('aria-selected','true');
+    checkoutArtworkEl.style.opacity = '0';
+    setTimeout(function(){
+      checkoutArtworkEl.src = thumb.dataset.art;
+      checkoutArtworkEl.alt = thumb.dataset.alt;
+      checkoutArtworkEl.style.opacity = '1';
+    }, 160);
+  });
+});
+
+/* --- QR de muestra (dibujado, no funcional) --- */
+(function(){
+  var qrbox = document.getElementById('qrbox');
+  if(!qrbox) return;
+  var N = 25, cell = 8, s = N*cell, seed = 7;
+  function rnd(){ seed = (seed*1103515245+12345) % 2147483648; return seed/2147483648; }
+  var r = '<svg viewBox="0 0 ' + s + ' ' + s + '" xmlns="http://www.w3.org/2000/svg"><rect width="' + s + '" height="' + s + '" fill="#fff"/>';
+  function finder(x,y){
+    r += '<rect x="' + (x*cell) + '" y="' + (y*cell) + '" width="' + (7*cell) + '" height="' + (7*cell) + '" fill="#0B0A14"/>';
+    r += '<rect x="' + ((x+1)*cell) + '" y="' + ((y+1)*cell) + '" width="' + (5*cell) + '" height="' + (5*cell) + '" fill="#fff"/>';
+    r += '<rect x="' + ((x+2)*cell) + '" y="' + ((y+2)*cell) + '" width="' + (3*cell) + '" height="' + (3*cell) + '" fill="#0B0A14"/>';
+  }
+  function inFinder(x,y){ return (x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9); }
+  for(var y=0;y<N;y++){
+    for(var x=0;x<N;x++){
+      if(inFinder(x,y)) continue;
+      if(rnd()>.5) r += '<rect x="' + (x*cell) + '" y="' + (y*cell) + '" width="' + cell + '" height="' + cell + '" fill="#0B0A14"/>';
+    }
+  }
+  finder(0,0); finder(N-7,0); finder(0,N-7);
+  r += '</svg>';
+  qrbox.innerHTML = r;
+})();
+
+/* ===========================================================
+   17 · puerta
+   =========================================================== */
+(function(){
+  var readoutEl = document.getElementById('readout');
+  var cInEl = document.getElementById('cIn'), cDupEl = document.getElementById('cDup');
+  if(!readoutEl) return;
+  var states = {
+    ok:{cls:'ok', v:'Adelante', l1:'RPC-30-8F2C-A91D · General', l2:'Camila Ferreyra · pedir DNI 41.208.774'},
+    dup:{cls:'dup', v:'Ya ingresó', l1:'RPC-30-8F2C-A91D · General', l2:'Primer ingreso 01:12 en puerta 1 · no dejar pasar'},
+    bad:{cls:'bad', v:'No válida', l1:'Firma incorrecta · el código no lo emitimos nosotros', l2:'Derivar a la mesa de la productora'}
+  };
+  var ins = 418, dup = 7;
+  document.querySelectorAll('[data-scan]').forEach(function(b){
+    b.onclick = function(){
+      var s = states[b.dataset.scan];
+      readoutEl.className = 'readout ' + s.cls;
+      readoutEl.innerHTML = '<div class="verdict">' + s.v + '</div><div>' + s.l1 + '</div><div style="color:var(--muted);margin-top:4px">' + s.l2 + '</div>';
+      if(b.dataset.scan === 'ok'){ cInEl.textContent = ++ins; } else { cDupEl.textContent = ++dup; }
+      if(navigator.vibrate) navigator.vibrate(b.dataset.scan === 'ok' ? 40 : [80,60,80]);
+    };
+  });
+})();
+
+/* ===========================================================
+   arranque
+   =========================================================== */
+renderAgenda();
+renderNext();
+renderWorlds();
+renderSets();
+renderGallery();
+renderMosaic();
+renderTimeline();
+initVideos();
+
+initChromeGrid();
+initCursor();
+initMagnetic();
+initTilt();
+initScramble();
+initReveal();
+initMarqueeSkew();
+initChromeSeal();
+
+/* el conmutador de marcas re-tematiza; al volver al inicio, azul */
+htmlEl.style.setProperty('--acc', '#168BFF');
+htmlEl.style.setProperty('--acc-rgb', '22,139,255');
+
+})();
+</script>
+</body>
+</html>

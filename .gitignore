@@ -1,0 +1,19 @@
+# Videos originales (másters de exportación, 100-436MB cada uno).
+# GitHub rechaza archivos de más de 100MB. El sitio usa las versiones
+# comprimidas de assets/web/, que sí se versionan.
+assets/Javi-1.mp4
+assets/paño javi.mp4
+assets/JAVIER2.mp4
+
+# Herramientas de desarrollo local, no forman parte del sitio
+.agents/
+.claude/
+
+# Capturas y archivos de trabajo
+rpc-check.png
+skills-lock.json
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
